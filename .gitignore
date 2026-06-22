@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#Claude edit
+*.db
+*.sqlite
+*.sqlite3
+.streamlit/secrets.toml
+venv/
+.venv/

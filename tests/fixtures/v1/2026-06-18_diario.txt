@@ -1,0 +1,124 @@
+Reporte de Inversión Intradía
+Análisis Bursátil Diario
+
+Jueves, 18 de junio de 2026  |  Operaciones compra-venta en el día
+Contexto General del Mercado
+
+La sesión del martes 17 de junio cerró en rojo, con el S&P 500 cayendo un 1,21% hasta los 7.420,10 puntos, tras la publicación del dot plot de la Reserva Federal. La Fed mantuvo tasas sin cambios, pero su proyección mediana para fin de 2026 subió al 3,8% (vs 3,4% previo), generando ventas masivas. Sin embargo, los futuros del jueves 18 de junio apuntan a un rebote firme.
+S&P 500 Futuros: +0,87% 	Nasdaq 100 Futuros: +1,32% 	Prob. apertura alcista: 98% (Polymarket)
+
+Factores adicionales positivos: negociaciones de paz EE.UU.-Irán presionando el petróleo a la baja (favorece el risk-on), liderazgo concentrado en IA y tecnología, y cierre de mercados el 19 de junio por el feriado Juneteenth, lo que puede incentivar posicionamiento hoy con mayor urgencia.
+Top 3 Recomendaciones Intradía
+
+Recomendación #1 — ETF
+Invesco QQQ Trust
+
+NASDAQ: QQQ  |  ETF Nasdaq-100
+
+
+~$730
+
+Precio aprox. apertura
+✅ SEGURA
+
+Crecimiento Esperado
+
++0,8% – +1,4%
+
+
+Nivel de Confianza
+
+78%
+
+
+Vol. Diario Promedio
+
+35M acc.
+
+Factores de mercado clave
+
+    Futuros del Nasdaq 100 con alza del +1,32% premarket, el mayor entre los índices principales.
+    Probabilidad del 98% de apertura al alza según el contrato del 18 de junio en Polymarket.
+    Negociaciones de paz EE.UU.-Irán reducen el petróleo, impulsando el apetito por activos de riesgo.
+    Exposición a las 100 principales empresas Nasdaq: NVIDIA, Apple, Microsoft, Meta, Amazon — líderes en IA.
+    Alta liquidez con bid/ask spreads mínimos y más de 35 millones de acciones negociadas por día.
+    Con el feriado del 19 de junio (Juneteenth), los inversores podrían adelantar posiciones hoy, generando demanda adicional.
+
+Por qué es SEGURA: Al ser un ETF diversificado en 100 empresas, el riesgo de una caída individual no afecta significativamente el conjunto. La señal de recuperación del mercado está respaldada por múltiples indicadores técnicos y fundamentales. El riesgo principal sería un evento macroeconómico inesperado que revirtiera los futuros antes de la apertura.
+
+Recomendación #2 — Acción Individual
+NVIDIA Corporation
+
+NASDAQ: NVDA  |  Semiconductores / IA
+
+
+~$209
+
+Precio aprox. apertura
+⚠️ MODERADO
+
+Crecimiento Esperado
+
++1,5% – +2,8%
+
+
+Nivel de Confianza
+
+67%
+
+
+52-Sem. Rango
+
+$142 – $237
+
+Factores de mercado clave
+
+    Líder absoluto en infraestructura de IA: chips H100/H200/Blackwell son el estándar de la industria en centros de datos.
+    Ingresos FY2026: $215.940 millones (+65,47% interanual); ganancias creciendo al mismo ritmo.
+    Precio hoy: rango entre $203 y $209, apertura a $208,53 — bien por encima del premarket (~$202), señal de momentum comprador.
+    62 analistas con calificación "Strong Buy"; precio objetivo consenso a 12 meses: $298,93 (+46%).
+    Futuros del Nasdaq, donde NVDA tiene alta ponderación, suben +1,32% premarket.
+    ATR 14 días: ~$6,25 (~3% del precio) — amplio margen de movimiento intradiario favorable para traders.
+
+Por qué es MODERADO: NVIDIA es altamente volátil: movimientos de $6+ por sesión son frecuentes. Si bien el momentum es excepcional, el entorno post-Fed hawkish puede generar rotación desde acciones de crecimiento de alto múltiplo. Una noticia negativa de sector IA o regulatoria podría invertir la tendencia rápidamente.
+
+Recomendación #3 — Acción con Catalizador
+Accenture PLC
+
+NYSE: ACN  |  Consultoría Tecnológica / IA
+
+
+~$350
+
+Precio aprox. apertura
+🔴 RIESGOSA
+
+Crecimiento Esperado
+
++1,5% – +3,0%
+
+
+Nivel de Confianza
+
+58%
+
+
+Catalizador
+
+Earnings Q3 FY2026
+
+Factores de mercado clave
+
+    Reporte de resultados Q3 FY2026 hoy 18 de junio: el catalizador más importante del día para este activo.
+    EPS Q3 reportado: ~$3,69–$3,80, por encima de las estimaciones de consenso de analistas.
+    Guidance actualizado: crecimiento de revenue FY2026 del 3%–4% en moneda local, o 4%–5% excluyendo negocio federal EE.UU.
+    Uno de los principales beneficiarios de la ola de adopción empresarial de IA: contratos masivos de transformación digital.
+    El rebote esperado del mercado general aporta presión compradora adicional sobre el nombre.
+    Históricamente, acciones de consultoría tech con beat de EPS suben entre 2% y 5% en la sesión posterior al reporte.
+
+Por qué es RIESGOSA: Los días de earnings son binarios: si los números decepcionan o el guidance resulta conservador, la acción puede caer significativamente en la misma sesión. Aunque los primeros indicios son positivos, el resultado favorable puede estar parcialmente descontado en el precio previo a la apertura. El nivel de confianza más bajo (58%) refleja esta incertidumbre inherente.
+Resumen Ejecutivo
+Activo 	Precio 	Crec. Esperado 	Confianza 	Clasificación
+QQQ – Invesco QQQ Trust ETF 	~$730 	+0,8%–+1,4% 	78% 	SEGURA
+NVDA – NVIDIA Corporation 	~$209 	+1,5%–+2,8% 	67% 	MODERADO
+ACN – Accenture PLC 	~$350 	+1,5%–+3,0% 	58% 	RIESGOSA

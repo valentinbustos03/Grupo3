@@ -138,6 +138,30 @@ estado crítico fuera del repo + yfinance.
    ```
 5. *Deploy*. La URL pública resultante es la que se le pasa al profesor.
 
+## Carga de datos
+
+Los análisis viven en `data/analisis/` del repo, nombrados
+`AAAA-MM-DD_<tipo>.html` (el nombre fija fecha y tipo; imprescindible para v1).
+
+- **v2 (≥ 2026-06-19):** la *Routine* de Claude los commitea automáticamente. La
+  app los lee por la API de GitHub al tocar **Actualizar**.
+- **v1 (≤ 2026-06-18, histórico, carga única):** se cargan una sola vez. Si están
+  como texto pegado, se envuelven en `.html` y se cargan localmente para verificar
+  antes de pushear:
+
+```bash
+# 1) crear el .html a partir del reporte viejo pegado
+.venv/bin/python scripts/nuevo_v1.py 2026-06-18 diario < reporte.txt
+
+# 2) ingerir desde disco (sin pushear) + traer precios + calcular veredictos
+.venv/bin/python scripts/cargar_local.py
+
+# 3) si los veredictos se ven bien -> commit + push de data/analisis/
+```
+
+`scripts/cargar_local.py` usa `ingestar_local()` (lee del disco); en producción la
+app usa `ingestar()` (lee de GitHub). Mismo parser y misma persistencia.
+
 ## Tests
 
 ```bash

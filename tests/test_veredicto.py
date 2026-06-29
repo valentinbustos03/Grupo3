@@ -27,10 +27,24 @@ def test_neutro_dentro_del_umbral():
 
 
 def test_sin_dato_no_rompe():
+    # Sin retorno del activo (ticker inexistente / hueco) => sin_dato total.
     v = calcular_veredicto(entrada_activo=100, cierre_activo=None,
                            entrada_sp500=5000, cierre_sp500=5050)
     assert v["estado_dato"] == "sin_dato"
     assert v["veredicto"] is None
+
+
+def test_sin_benchmark_protocolo_parcial():
+    # Día de mercado cerrado: activo 24/7 con datos, pero el S&P no cotizó.
+    v = calcular_veredicto(entrada_activo=100, cierre_activo=102,
+                           entrada_sp500=None, cierre_sp500=None,
+                           crecimiento_estimado=1.8)
+    assert v["estado_dato"] == "sin_benchmark"
+    assert round(v["ret_activo"], 4) == 2.0     # retorno absoluto sí se calcula
+    assert v["alpha"] is None                    # no hay alpha vs S&P
+    assert v["veredicto"] is None
+    assert v["acierto_absoluto"] == 1            # calibración disponible
+    assert v["direccion_coincide"] == 1
 
 
 def test_direccion_no_coincide():

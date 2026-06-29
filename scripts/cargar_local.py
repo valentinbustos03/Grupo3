@@ -30,7 +30,8 @@ def main() -> None:
 
     print("→ Precios (yfinance) + alpha/veredictos ...")
     r_cal = recalcular(conn)
-    print(f"  ok={r_cal['ok']} sin_dato={r_cal['sin_dato']} pendientes={r_cal['pendientes']}")
+    print(f"  ok={r_cal['ok']} sin_benchmark={r_cal.get('sin_benchmark', 0)} "
+          f"sin_dato={r_cal['sin_dato']} pendientes={r_cal['pendientes']}")
 
     df = metricas.df_recomendaciones(conn, solo_ok=False)
     print("\n→ Recomendaciones cargadas:")

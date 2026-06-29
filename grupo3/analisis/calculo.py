@@ -26,7 +26,8 @@ def recalcular(
 ) -> dict:
     """Calcula y persiste mercado+veredicto. Devuelve un resumen."""
     provider = provider or YFinanceProvider()
-    resumen = {"procesadas": 0, "ok": 0, "sin_dato": 0, "pendientes": 0}
+    resumen = {"procesadas": 0, "ok": 0, "sin_benchmark": 0,
+               "sin_dato": 0, "pendientes": 0}
 
     cache_benchmark: dict[tuple[str, str], tuple] = {}
 
@@ -77,7 +78,7 @@ def recalcular(
                 "estado_dato": v["estado_dato"],
             },
         )
-        resumen["ok" if v["estado_dato"] == "ok" else "sin_dato"] += 1
+        resumen[v["estado_dato"]] = resumen.get(v["estado_dato"], 0) + 1
 
     return resumen
 

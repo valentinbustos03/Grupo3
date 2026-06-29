@@ -1,7 +1,10 @@
 """Métricas agregadas (Etapa 2). Filtrables por horizonte y formato_version.
 
-Todo se calcula sobre las recomendaciones con estado_dato='ok' (las que tienen
-precios resueltos). Las funciones devuelven DataFrames/escalares listos para la UI.
+Las métricas vs S&P (hit rate, alpha, equity, performance por riesgo) usan sólo
+estado_dato='ok'. La CALIBRACIÓN incluye además 'sin_benchmark' (días de mercado
+cerrado: hay retorno absoluto y dirección, pero no alpha) — el caller pasa
+``estados=('ok','sin_benchmark')`` a ``df_recomendaciones``. Las funciones
+devuelven DataFrames/escalares listos para la UI.
 """
 from __future__ import annotations
 
@@ -15,8 +18,14 @@ def df_recomendaciones(
     formato_version: int | None = None,
     tipo: str | None = None,
     solo_ok: bool = True,
+    estados: tuple[str, ...] | None = None,
 ) -> pd.DataFrame:
-    """Recomendaciones unidas a su análisis, con filtros opcionales."""
+    """Recomendaciones unidas a su análisis, con filtros opcionales.
+
+    estados: si se pasa, filtra por estos ``estado_dato`` (tiene prioridad sobre
+    ``solo_ok``). Útil para la calibración, que incluye 'sin_benchmark' (días de
+    mercado cerrado: tienen retorno absoluto y dirección, pero no alpha vs S&P).
+    """
     sql = [
         "SELECT a.fecha, a.tipo, a.formato_version, r.activo, r.ticker,",
         "       r.precio_entrada, r.crecimiento_estimado, r.confianza, r.riesgo,",
@@ -31,7 +40,10 @@ def df_recomendaciones(
     if tipo:
         cond.append("a.tipo = ?")
         params.append(tipo)
-    if solo_ok:
+    if estados is not None:
+        cond.append("r.estado_dato IN (%s)" % ",".join("?" * len(estados)))
+        params.extend(estados)
+    elif solo_ok:
         cond.append("r.estado_dato = 'ok'")
     if cond:
         sql.append("WHERE " + " AND ".join(cond))

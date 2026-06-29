@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS recomendaciones (
     veredicto            TEXT,                       -- GANO|PERDIO|NEUTRO
     acierto_absoluto     INTEGER,                    -- bool: ret_activo > 0
     direccion_coincide   INTEGER,                    -- bool: signo(estimado)==signo(real)
-    estado_dato          TEXT DEFAULT 'pendiente',   -- pendiente|ok|sin_dato
+    estado_dato          TEXT DEFAULT 'pendiente',   -- pendiente|ok|sin_benchmark|sin_dato
     calculado_en         TEXT
 );
 

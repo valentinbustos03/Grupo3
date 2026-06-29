@@ -41,15 +41,36 @@ def calcular_veredicto(
     ret_activo = _retorno(entrada_activo, cierre_activo)
     ret_sp500 = _retorno(entrada_sp500, cierre_sp500)
 
-    if ret_activo is None or ret_sp500 is None:
+    # Sin retorno del activo no hay NADA utilizable (ticker inexistente, hueco).
+    if ret_activo is None:
         return {
-            "ret_activo": ret_activo,
+            "ret_activo": None,
             "ret_sp500": ret_sp500,
             "alpha": None,
             "veredicto": None,
             "acierto_absoluto": None,
             "direccion_coincide": None,
             "estado_dato": "sin_dato",
+        }
+
+    # Señales que NO dependen del benchmark (calibración del modelo).
+    acierto_absoluto = int(ret_activo > 0)
+    direccion_coincide = None
+    if crecimiento_estimado is not None:
+        direccion_coincide = int((crecimiento_estimado >= 0) == (ret_activo >= 0))
+
+    # Protocolo PARCIAL (días de mercado cerrado): el activo cotiza (24/7) pero el
+    # S&P 500 no → no hay alpha relativo. Guardamos retorno absoluto + calibración;
+    # alpha/veredicto quedan N/A y estos casos se excluyen de las métricas vs S&P.
+    if ret_sp500 is None:
+        return {
+            "ret_activo": ret_activo,
+            "ret_sp500": None,
+            "alpha": None,
+            "veredicto": None,
+            "acierto_absoluto": acierto_absoluto,
+            "direccion_coincide": direccion_coincide,
+            "estado_dato": "sin_benchmark",
         }
 
     alpha = ret_activo - ret_sp500
@@ -60,18 +81,12 @@ def calcular_veredicto(
     else:
         veredicto = "NEUTRO"
 
-    direccion_coincide = None
-    if crecimiento_estimado is not None:
-        direccion_coincide = int(
-            (crecimiento_estimado >= 0) == (ret_activo >= 0)
-        )
-
     return {
         "ret_activo": ret_activo,
         "ret_sp500": ret_sp500,
         "alpha": alpha,
         "veredicto": veredicto,
-        "acierto_absoluto": int(ret_activo > 0),
+        "acierto_absoluto": acierto_absoluto,
         "direccion_coincide": direccion_coincide,
         "estado_dato": "ok",
     }

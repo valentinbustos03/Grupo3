@@ -37,9 +37,11 @@ def parse_html(html: str, ruta_archivo: str | None = None) -> dict:
     else:
         data = _parse_v1(soup)
 
-    # Completar tipo/fecha faltantes desde el nombre de archivo (fuente confiable).
-    data["tipo"] = data.get("tipo") or meta_archivo.get("tipo")
-    data["fecha"] = data.get("fecha") or meta_archivo.get("fecha")
+    # El nombre de archivo AAAA-MM-DD_<tipo>.html es la fuente CANÓNICA de fecha y
+    # tipo (el texto puede traer fechas ruidosas: rangos de semana, día de cierre,
+    # etc.). Si el nombre las define, mandan; si no, caemos a lo parseado del HTML.
+    data["tipo"] = meta_archivo.get("tipo") or data.get("tipo")
+    data["fecha"] = meta_archivo.get("fecha") or data.get("fecha")
     data["formato_version"] = formato_version
     return data
 

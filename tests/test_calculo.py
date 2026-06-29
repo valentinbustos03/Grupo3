@@ -54,7 +54,8 @@ def test_recalcular_alpha_y_veredicto():
     _sembrar(conn)
     fp = FakeProvider({"AAPL": (100, 103), "MSFT": (200, 198), "^GSPC": (5000, 5050)})
     resumen = recalcular(conn, provider=fp)
-    assert resumen == {"procesadas": 3, "ok": 2, "sin_dato": 1, "pendientes": 0}
+    assert resumen == {"procesadas": 3, "ok": 2, "sin_benchmark": 0,
+                       "sin_dato": 1, "pendientes": 0}
 
     df = metricas.df_recomendaciones(conn, solo_ok=False).set_index("ticker")
     # AAPL: +3% vs +1% => alpha +2 => GANO
@@ -88,6 +89,27 @@ def test_metricas_agregadas():
     eq = metricas.equity_curve(df)
     assert list(eq.columns) == ["fecha", "recos_acum", "sp500_acum"]
     assert len(eq) == 1                                # una sola fecha
+
+
+def test_protocolo_sin_benchmark_dia_cerrado():
+    # Día de mercado cerrado: los activos cotizan pero el S&P (y SPY) no.
+    conn = _conn()
+    _sembrar(conn)
+    fp = FakeProvider({"AAPL": (100, 102), "MSFT": (200, 198)})   # sin ^GSPC/SPY
+    resumen = recalcular(conn, provider=fp)
+    assert resumen["sin_benchmark"] == 2        # AAPL y MSFT: precio sí, S&P no
+    assert resumen["sin_dato"] == 1             # ZZZ: ticker inexistente
+
+    # Métricas vs S&P excluyen 'sin_benchmark'.
+    df_ok = metricas.df_recomendaciones(conn)            # solo 'ok'
+    assert metricas.kpis(df_ok)["n"] == 0
+
+    # La calibración SÍ los incluye (retorno absoluto + dirección disponibles).
+    df_cal = metricas.df_recomendaciones(conn, estados=("ok", "sin_benchmark"))
+    cal = metricas.calibracion(df_cal).set_index("ticker")
+    assert set(cal.index) == {"AAPL", "MSFT"}
+    assert cal.loc["AAPL", "acierto_absoluto"] == 1      # +2% subió
+    assert cal.loc["AAPL", "direccion_coincide"] == 1    # estimó +1%, subió
 
 
 def test_idempotencia_recalcular_solo_pendientes():

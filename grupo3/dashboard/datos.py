@@ -41,6 +41,13 @@ def cargar_recos(tipo: str | None = None) -> pd.DataFrame:
     return metricas.df_recomendaciones(conn(), tipo=tipo, solo_ok=True)
 
 
+@st.cache_data(show_spinner=False)
+def cargar_recos_calibracion(tipo: str | None = None) -> pd.DataFrame:
+    """Recos para la calibración: incluye 'sin_benchmark' (días de mercado cerrado
+    con acierto absoluto y dirección, pero sin alpha) además de 'ok'."""
+    return metricas.df_recomendaciones(conn(), tipo=tipo, estados=("ok", "sin_benchmark"))
+
+
 def contar_analisis() -> int:
     return int(conn().execute("SELECT COUNT(*) FROM analisis").fetchone()[0])
 

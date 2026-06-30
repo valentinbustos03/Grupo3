@@ -84,7 +84,8 @@ def render() -> None:
     # --- Fig 3: calibración ---
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.markdown("##### Fig. 3 · Calibración — confianza declarada vs aciertos")
-    st.plotly_chart(figuras.fig_calibracion(metricas.calibracion_por_tramo(df)),
+    df_cal = datos.aplicar_filtros(datos.cargar_recos_calibracion(tipo=tipo), riesgo)
+    st.plotly_chart(figuras.fig_calibracion(metricas.calibracion_por_tramo(df_cal)),
                     width="stretch", config={"displayModeBar": False})
     st.markdown("</div>", unsafe_allow_html=True)
 

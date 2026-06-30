@@ -45,3 +45,17 @@ def test_calibracion_por_tramo_vacio_no_rompe():
     out = metricas.calibracion_por_tramo(vacio)
     assert list(out.columns) == ["tramo", "conf_media", "aciertos_pct", "n"]
     assert out.empty
+
+
+def test_calibracion_por_tramo_incluye_filas_sin_alpha():
+    import numpy as np
+    df = pd.DataFrame({
+        "ticker": ["BTC", "AAPL"],
+        "confianza": [75.0, 75.0],
+        "acierto_absoluto": [1, 0],
+        "alpha": [np.nan, 1.0],  # BTC = sin_benchmark (sin alpha) pero con acierto
+    })
+    out = metricas.calibracion_por_tramo(df)
+    fila = out[out["tramo"] == "70–80"].iloc[0]
+    assert fila["n"] == 2            # ambas cuentan, incluida la de alpha NaN
+    assert fila["aciertos_pct"] == 50.0

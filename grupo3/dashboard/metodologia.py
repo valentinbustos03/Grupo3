@@ -4,6 +4,7 @@ from __future__ import annotations
 import streamlit as st
 
 from grupo3 import config
+from grupo3.dashboard import theme
 
 
 def _seccion(titulo: str, cuerpo_html: str) -> None:
@@ -64,10 +65,10 @@ def render() -> None:
         "<p class='flow'>ret_activo = (cierre/entrada − 1)·100<br>"
         "ret_sp500&nbsp; = (cierre/entrada − 1)·100&nbsp;&nbsp;(mismo período)<br>"
         "alpha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = ret_activo − ret_sp500</p>"
-        f"<p><span class='badge' style='color:#4ade80;border-color:#4ade8066;"
-        f"background:#4ade801f'>GANÓ</span> si alpha &gt; 0 · "
-        f"<span class='badge' style='color:#f87171;border-color:#f8717166;"
-        f"background:#f871711f'>PERDIÓ</span> si alpha &lt; 0 · "
+        f"<p><span class='badge' style='color:{theme.VERDE};border-color:{theme.VERDE}66;"
+        f"background:{theme.VERDE}1f'>GANÓ</span> si alpha &gt; 0 · "
+        f"<span class='badge' style='color:{theme.ROJO};border-color:{theme.ROJO}66;"
+        f"background:{theme.ROJO}1f'>PERDIÓ</span> si alpha &lt; 0 · "
         f"<b>NEUTRO</b> si |alpha| &lt; {config.UMBRAL_NEUTRO}%.</p>"
         "<p>También se guarda el <b>acierto absoluto</b> (ret_activo &gt; 0) y si la "
         "<b>dirección</b> estimada coincidió con la real (calibración del modelo).</p>",

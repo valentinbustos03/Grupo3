@@ -26,8 +26,9 @@ def _money(v) -> str:
 
 def badge_riesgo(nivel: str | None) -> str:
     if _na(nivel):
-        return '<span class="badge" style="color:#9ca3af;border-color:#9ca3af55;' \
-               'background:#9ca3af1a">—</span>'
+        color = theme.NEUTRO
+        return (f'<span class="badge" style="color:{color};border-color:{color}55;'
+                f'background:{color}1a">—</span>')
     color = theme.RIESGO_COLOR.get(nivel, theme.NEUTRO)
     return (f'<span class="badge" style="color:{color};border-color:{color}66;'
             f'background:{color}1f">{html.escape(str(nivel))}</span>')

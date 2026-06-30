@@ -64,7 +64,7 @@ def plotly_layout() -> dict:
 def build_css() -> str:
     """Devuelve el bloque <style> completo del tema."""
     return f"""<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
 
 :root {{
   --verde: {VERDE}; --rojo: {ROJO}; --violeta: {VIOLETA}; --cian: {CIAN};
@@ -106,22 +106,45 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
   padding: 22px 24px; margin-bottom: 18px;
 }}
 
-/* Masthead */
-.masthead-kicker {{ font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255,255,255,.55); margin: 0 0 6px; }}
-.masthead-title {{ font-size: 54px; font-weight: 700; line-height: 1.05; margin: 0;
-  letter-spacing: -.01em;
-  background: linear-gradient(125deg, #ffffff 0%, {VIOLETA} 42%, {VERDE} 100%);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; }}
-.masthead-sub {{ color: rgba(255,255,255,.6); margin: 10px 0 0; font-size: 15px; }}
+/* Masthead (marca Grupo3 + logo + estado) */
+.masthead {{ min-height: 168px; }}
+.mh-top {{ display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px; }}
+.brand-kicker {{ font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); margin: 0; }}
+.brand-row {{ display: flex; align-items: center; gap: 18px; }}
+.logo-slot {{ width: 60px; height: 60px; flex: 0 0 60px; border-radius: 15px;
+  border: 1px dashed rgba(255,255,255,.22); background: rgba(255,255,255,.04);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.32); text-align: center; }}
+.brand-title {{ font-family: 'IBM Plex Serif', Georgia, serif; font-weight: 700;
+  font-size: 60px; line-height: 1; margin: 0; color: #fff; letter-spacing: -.01em; }}
+.brand-3 {{ background: linear-gradient(120deg, {CIAN} 0%, {VIOLETA} 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }}
+.brand-sub {{ color: rgba(255,255,255,.6); margin: 16px 0 0; font-size: 15px; }}
+.status-pill {{ display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px;
+  border-radius: 999px; font-size: 12.5px; font-weight: 600;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.85); white-space: nowrap; }}
+.status-pill .dot {{ width: 8px; height: 8px; border-radius: 50%; }}
+.status-pill.up .dot {{ background: {VERDE}; box-shadow: 0 0 8px {VERDE}; }}
+.status-pill.down .dot {{ background: {ROJO}; box-shadow: 0 0 8px {ROJO}; }}
+
+/* Controles a la derecha del masthead */
+.ctl-label {{ font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); margin: 0 0 6px; }}
+[data-testid="stSegmentedControl"] [role="radiogroup"] {{ gap: 4px; }}
+[data-testid="stSegmentedControl"] button {{ border-radius: 11px !important; }}
 
 /* KPI cards */
 .kpi-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 6px; }}
 .kpi-label {{ font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
   color: rgba(255,255,255,.55); margin: 0 0 10px; }}
-.kpi-value {{ font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 700;
+.kpi-value {{ font-family: 'JetBrains Mono', monospace; font-size: 38px; font-weight: 700;
   line-height: 1; margin: 0; }}
+.kpi-value .grad {{ background: linear-gradient(120deg, {CIAN}, {VIOLETA});
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }}
 .kpi-note {{ font-size: 12.5px; color: rgba(255,255,255,.5); margin: 10px 0 0; }}
 .pos {{ color: {VERDE}; }} .neg {{ color: {ROJO}; }} .muted {{ color: rgba(255,255,255,.7); }}
 

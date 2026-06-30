@@ -11,13 +11,20 @@ _RIESGOS = ["Todos", "Muy segura", "Segura", "Moderado", "Riesgosa", "Muy Riesgo
 
 
 def render() -> None:
-    st.markdown(componentes.masthead(), unsafe_allow_html=True)
+    # Fila superior: marca (izq) + controles (der), estilo mockup v2.
+    col_l, col_r = st.columns([1.7, 1], vertical_alignment="center")
+    with col_r:
+        st.markdown('<p class="ctl-label">Horizonte</p>', unsafe_allow_html=True)
+        label_tipo = st.segmented_control(
+            "Horizonte", list(_TIPOS), default="Diario",
+            label_visibility="collapsed", key="hz",
+        )
+        riesgo = st.selectbox("Nivel de riesgo", _RIESGOS)
+        actualizar = st.button("🔄 Actualizar", width="stretch")
 
-    # --- Filtros ---
-    f1, f2, f3 = st.columns([1.2, 1.2, 1])
-    label_tipo = f1.radio("Horizonte", list(_TIPOS), horizontal=True)
-    riesgo = f2.selectbox("Nivel de riesgo", _RIESGOS)
-    if f3.button("🔄 Actualizar", width="stretch"):
+    tipo = _TIPOS[label_tipo or "Diario"]
+
+    if actualizar:
         with st.spinner("Repo → precios → veredictos…"):
             r_ing, r_cal = datos.actualizar()
         st.success(
@@ -26,6 +33,8 @@ def render() -> None:
         )
 
     if datos.contar_analisis() == 0:
+        with col_l:
+            st.markdown(componentes.masthead(), unsafe_allow_html=True)
         st.markdown(
             componentes.estado_vacio(
                 "No hay análisis todavía. Cargá HTML en data/analisis/ del repo "
@@ -35,14 +44,19 @@ def render() -> None:
         )
         return
 
-    tipo = _TIPOS[label_tipo]
     df = datos.aplicar_filtros(datos.cargar_recos(tipo=tipo), riesgo)
 
-    # --- KPI cards ---
+    # --- KPI cards (alpha define el estado "IA en ventaja" del masthead) ---
     k = metricas.kpis(df)
     mejor = metricas.mejor_recomendacion(df)
+    alpha_acum = k["alpha_acumulado"]
+    ia_en_ventaja = None if alpha_acum is None else alpha_acum > 0
+    with col_l:
+        st.markdown(componentes.masthead(ia_en_ventaja=ia_en_ventaja),
+                    unsafe_allow_html=True)
+
     resumen = {
-        "hit_rate": k["hit_rate"], "alpha_acumulado": k["alpha_acumulado"], "n": k["n"],
+        "hit_rate": k["hit_rate"], "alpha_acumulado": alpha_acum, "n": k["n"],
         "mejor_ticker": mejor["ticker"] if mejor else None,
         "mejor_alpha": mejor["alpha"] if mejor else None,
     }

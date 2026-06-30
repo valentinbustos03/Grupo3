@@ -108,3 +108,51 @@ def equity_curve(df: pd.DataFrame) -> pd.DataFrame:
             "sp500_acum": sp500_acum.values,
         }
     )
+
+
+def mejor_recomendacion(df: pd.DataFrame) -> dict | None:
+    """Reco de mayor alpha del set filtrado (para la KPI card "Mejor reco")."""
+    if df.empty or "alpha" not in df.columns or df["alpha"].dropna().empty:
+        return None
+    fila = df.loc[df["alpha"].idxmax()]
+    ticker = fila.get("ticker") or fila.get("activo") or "—"
+    ret = fila.get("ret_activo")
+    return {
+        "ticker": str(ticker),
+        "alpha": float(fila["alpha"]),
+        "ret": None if pd.isna(ret) else float(ret),
+    }
+
+
+# Tramos de confianza para la calibración (mismos cortes que el mockup).
+_TRAMOS_BINS = [50, 60, 70, 80, 90, 100]
+_TRAMOS_LABELS = ["50–60", "60–70", "70–80", "80–90", "90–100"]
+
+
+def calibracion_por_tramo(df: pd.DataFrame) -> pd.DataFrame:
+    """Confianza declarada vs aciertos reales, agrupados por banda de confianza.
+
+    Para Fig. 3: por cada tramo (50–60 … 90–100) devuelve la confianza media
+    declarada y el % real de aciertos. Confianzas fuera de [50,100] se descartan.
+    """
+    cols = ["tramo", "conf_media", "aciertos_pct", "n"]
+    cal = calibracion(df)
+    if cal.empty or "acierto_absoluto" not in cal.columns:
+        return pd.DataFrame(columns=cols)
+    cal = cal.dropna(subset=["confianza", "acierto_absoluto"]).copy()
+    if cal.empty:
+        return pd.DataFrame(columns=cols)
+    cal["tramo"] = pd.cut(
+        cal["confianza"], bins=_TRAMOS_BINS, labels=_TRAMOS_LABELS,
+        include_lowest=True, right=True,
+    )
+    g = cal.groupby("tramo", observed=True)
+    out = pd.DataFrame(
+        {
+            "conf_media": g["confianza"].mean(),
+            "aciertos_pct": g["acierto_absoluto"].mean() * 100,
+            "n": g.size(),
+        }
+    ).reset_index()
+    out["tramo"] = out["tramo"].astype(str)
+    return out[cols]

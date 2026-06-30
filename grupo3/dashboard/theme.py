@@ -172,11 +172,16 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
   color: rgba(255,255,255,.55); font-weight: 700;
   margin: 0 0 8px; text-align: right;
 }}
-/* Segmented control: shrink al contenido y empujar a la derecha */
+/* Columna derecha del masthead: alinear a la derecha via text-align */
 [data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)
+  [data-testid="stColumn"]:has(.ctl-label) {{
+  text-align: right !important;
+}}
+/* stSegmentedControl como inline-block respeta text-align del padre */
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)
+  [data-testid="stColumn"]:has(.ctl-label)
   [data-testid="stSegmentedControl"] {{
-  width: fit-content !important;
-  margin-left: auto !important;
+  display: inline-block !important;
 }}
 [data-testid="stSegmentedControl"] [role="radiogroup"] {{
   gap: 4px;

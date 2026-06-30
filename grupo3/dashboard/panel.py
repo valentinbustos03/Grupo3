@@ -29,7 +29,7 @@ def render() -> None:
             )
         # Controles integrados en el masthead
         st.markdown('<hr class="mh-sep">', unsafe_allow_html=True)
-        ctl_l, ctl_r, _ = st.columns([1.5, 1.1, 2.2])
+        ctl_l, ctl_r, _ = st.columns([1.5, 1.1, 2.2], vertical_alignment="bottom")
         riesgo     = ctl_l.selectbox("Nivel de riesgo", _RIESGOS, label_visibility="visible")
         actualizar = ctl_r.button("↻  Actualizar", width="stretch")
 

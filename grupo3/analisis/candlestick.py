@@ -28,7 +28,7 @@ def _normalizar(df: pd.DataFrame) -> pd.DataFrame:
     return df[_COLS] / base * 100
 
 
-def _vela(fig, df, nombre, color, opacidad):
+def _candlestick(fig, df, nombre, color, opacidad):
     n = _normalizar(df)
     fig.add_trace(
         go.Candlestick(
@@ -36,6 +36,18 @@ def _vela(fig, df, nombre, color, opacidad):
             name=nombre, opacity=opacidad,
             increasing_line_color=color, decreasing_line_color=color,
             increasing_fillcolor=color, decreasing_fillcolor=color,
+        )
+    )
+
+
+def _ohlc(fig, df, nombre, color):
+    """OHLC sin relleno (barras delgadas) — visible sobre el cuerpo del candlestick."""
+    n = _normalizar(df)
+    fig.add_trace(
+        go.Ohlc(
+            x=n.index, open=n["Open"], high=n["High"], low=n["Low"], close=n["Close"],
+            name=nombre,
+            increasing_line_color=color, decreasing_line_color=color,
         )
     )
 
@@ -53,20 +65,21 @@ def build_candlestick(
     _, _, df_bench, bench_tk = mercado.precios_benchmark(provider, tipo, fecha)
 
     fig = go.Figure()
-    if df_bench is not None and not df_bench.empty:
-        _vela(fig, df_bench, f"S&P 500 ({bench_tk})", _GRIS_BENCH, 0.55)
+    # Ticker primero (cuerpo con relleno, detrás)
     if df_act is not None and not df_act.empty:
-        _vela(fig, df_act, f"{ticker} (reco)",
-              _COLOR_VEREDICTO.get(veredicto, "#9ca3af"), 0.95)
+        _candlestick(fig, df_act, ticker,
+                     _COLOR_VEREDICTO.get(veredicto, "#9ca3af"), 0.90)
+    # S&P 500 como OHLC (barras delgadas, encima — siempre visible)
+    if df_bench is not None and not df_bench.empty:
+        _ohlc(fig, df_bench, f"S&P 500 ({bench_tk})", _GRIS_BENCH)
 
     fig.add_hline(y=100, line_dash="dot", line_color="#888",
-                  annotation_text="base 100 (apertura)", annotation_position="top left")
+                  annotation_text="base 100", annotation_position="top left")
     fig.update_layout(
         template="plotly_dark",
-        title=f"{ticker} vs S&P 500 — {tipo} {fecha} (base 100 en la apertura)",
-        yaxis_title="Índice (apertura = 100)",
+        yaxis_title="Base 100 (apertura del período)",
         xaxis_rangeslider_visible=False,
         legend={"orientation": "h", "yanchor": "bottom", "y": 1.02},
-        margin={"l": 40, "r": 20, "t": 60, "b": 30},
+        margin={"l": 40, "r": 20, "t": 20, "b": 30},
     )
     return fig

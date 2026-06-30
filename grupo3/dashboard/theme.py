@@ -138,7 +138,8 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 
 /* === Masthead (glass card del header) =============================== */
 .mh-anchor {{ display: none; }}
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) {{
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor),
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) > div {{
   position: relative; overflow: hidden;
   background:
     radial-gradient(140% 120% at 12% -10%, rgba(255,255,255,.26),
@@ -221,7 +222,8 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 
 /* === Chart/Table glass containers (anchor: .gc) ==================== */
 .gc {{ display: none; }}
-[data-testid="stVerticalBlockBorderWrapper"]:has(.gc) {{
+[data-testid="stVerticalBlockBorderWrapper"]:has(.gc),
+[data-testid="stVerticalBlockBorderWrapper"]:has(.gc) > div {{
   position: relative; overflow: hidden;
   background: {_GLASS_BG};
   backdrop-filter: blur(42px) saturate(180%);

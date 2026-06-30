@@ -1,0 +1,9 @@
+# Dashboard de análisis bursátil — dependencias
+streamlit>=1.40
+pandas>=2.2
+plotly>=5.24
+yfinance>=0.2.40
+beautifulsoup4>=4.12
+lxml>=5.3
+requests>=2.32
+# SQLite es parte de la stdlib de Python (sqlite3), no requiere paquete.

@@ -1,0 +1,14 @@
+# Tema dark "Liquid Glass" — el CSS fino se inyecta desde grupo3/dashboard/theme.py
+[theme]
+base = "dark"
+primaryColor = "#4ade80"             # verde acento (ganó)
+backgroundColor = "#05060a"          # fondo near-black
+secondaryBackgroundColor = "#0c1018" # cards / sidebar
+textColor = "#e6edf3"
+font = "sans serif"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false

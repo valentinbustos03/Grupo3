@@ -224,3 +224,6 @@ __marimo__/
 .streamlit/secrets.toml
 venv/
 .venv/
+
+# Batch de carga manual (contiene emails personales) — no versionar
+dias.txt

@@ -1,0 +1,4 @@
+Recomendaciones 2026-06-02 (diario)
+AAPL | nombre: Apple Inc. | riesgo: Segura | estimado: +2.5% | confianza: 80% | entrada: 195.30
+MSFT | riesgo: Moderado | estimado: +1.8% | confianza: 72% | entrada: 441.10
+NVDA | riesgo: Riesgosa | estimado: +3.0% | confianza: 65%

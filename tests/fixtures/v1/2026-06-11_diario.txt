@@ -1,0 +1,79 @@
+Reporte de Inversión
+Análisis Bursátil Diario
+Operaciones de Corto Plazo · Compra y Venta en el Día
+
+Fecha
+11/06/2026
+Contexto Global del Mercado
+S&P 500
+7.327 pts
+▲ +0.83% hoy
+
+Brent Crude (petróleo)
++33% vs. pre-conflicto
+▲ Presión geopolítica activa
+
+El mercado norteamericano opera con sesgo mixto pero con sectores claramente ganadores. El S&P 500 avanza un +0.83%, mientras que 8 de los 11 sectores del índice cierran en negativo, con tecnología e industriales liderando las caídas.
+
+Hito histórico: SpaceX (ticker: SPCX) fija el precio de su IPO esta noche tras el cierre de mercado, con primer día de cotización el 12 de junio en el Nasdaq. Valoración objetivo: $1.77 billones de dólares — la mayor OPV de la historia bursátil. Este evento genera un efecto anticipatorio en el sector aeroespacial y de defensa durante toda la jornada del 11.
+
+Conflicto en Oriente Medio (80+ días): Las disrupciones en el Estrecho de Ormuz acumulan más de 1.000 millones de barriles de pérdida de suministro. El ejército de EE.UU. anunció la conclusión de sus últimas operaciones militares contra Irán, abriendo la puerta a negociaciones de paz, pero la prima de riesgo geopolítica en el petróleo sigue elevada.
+
+BCE sube tipos: El Banco Central Europeo realizó su primera suba de tasas en casi 3 años, en respuesta a la presión inflacionaria derivada de la crisis energética. Oracle (ORCL) cae más de un 8% tras revelar una emisión de acciones y deuda por $20.000 millones para financiar su expansión en inteligencia artificial.
+3 Recomendaciones de Inversión para Hoy
+ETF Energético · NYSE
+XLE Energy Select Sector SPDR ETF 	Precio aprox.
+~$57.50
+Crecimiento estimado
++1.5% – +2.5%
+
+Confianza
+68%
+
+Clasificación
+⚖ Moderado
+
+Factores de mercado: XLE concentra las mayores empresas de petróleo y gas de EE.UU. (ExxonMobil 22%, Chevron 16%). Con el precio del Brent un tercio por encima de sus niveles previos al conflicto en Oriente Medio, el ETF actúa como vehículo de exposición al rally energético con menor riesgo individual que una acción sola.
+
+Catalizadores del día: Las disrupciones en el Estrecho de Ormuz continúan. El anuncio del fin de operaciones militares de EE.UU. contra Irán puede provocar volatilidad al alza inicial, ya que los mercados interpretan una posible estabilización (sin colapso aún de los precios del petróleo).
+
+Riesgo principal: Si se anuncia un acuerdo de paz formal o la reapertura del Estrecho de Ormuz, el precio del crudo podría corregir bruscamente, arrastrando al ETF. Clasificado como Moderado por la cobertura que ofrece el ETF frente a stocks individuales, pero expuesto a reversión geopolítica.
+ETF Aeroespacial y Defensa · NYSE
+ITA iShares U.S. Aerospace & Defense ETF 	Precio aprox.
+~$230.00
+Crecimiento estimado
++1.8% – +3.0%
+
+Confianza
+62%
+
+Clasificación
+⚖ Moderado
+
+Factores de mercado: ITA agrupa las principales empresas aeroespaciales y de defensa de EE.UU. La combinación de tensión bélica sostenida (conflicto en Oriente Medio + 80 días) y el evento histórico del IPO de SpaceX esta noche genera un efecto halo sobre todo el sector espacial-aeronáutico. El sector defensa también se beneficia del aumento de gasto militar en Europa y Asia.
+
+Catalizadores del día: El precio del SPCX se define hoy tras el cierre. Los inversores que no pudieron acceder al IPO buscan exposición indirecta al sector espacial a través de ETFs como ITA durante toda la jornada del 11. Range 52 semanas: $175.60 – $250.65, cotizando actualmente en zona intermedia con potencial técnico.
+
+Riesgo principal: Si el precio del IPO de SpaceX decepciona al mercado o se producen ventas masivas en el Nasdaq, el sector podría sufrir correcciones. Clasificado como Moderado por la diversificación sectorial del ETF y el fuerte sentimiento positivo previo al IPO.
+Acción · NYSE
+CVX Chevron Corporation 	Precio aprox.
+~$192.00
+Crecimiento estimado
++2.0% – +4.0%
+
+Confianza
+60%
+
+Clasificación
+⚠ Riesgosa
+
+Factores de mercado: Chevron es el mayor beneficiario individual del shock energético de 2026, acumulando un +22% en lo que va del año. Con posiciones de producción fuera del Golfo Pérsico, mantiene output sostenido mientras sus competidores en Oriente Medio sufren disrupciones. Fuerte momentum técnico y flujo de caja robusto a precios de crudo elevados.
+
+Catalizadores del día: El anuncio del fin de operaciones militares de EE.UU. puede provocar una reacción alcista inicial en el petróleo (optimismo de estabilización controlada). Analistas de mercado siguen elevando estimados de ganancias para integradas como CVX con precios del Brent sostenidos.
+
+Riesgo principal: Al ser una acción individual y no un ETF, concentra más riesgo específico. Clasificada como Riesgosa porque cualquier anuncio de tregua o acuerdo diplomático podría provocar una corrección rápida del precio del crudo y, en consecuencia, de CVX en el intradía. Alta volatilidad esperada dado el contexto geopolítico cambiante.
+Resumen Comparativo
+Activo 	Tipo 	Precio 	Crecimiento Est. 	Confianza 	Clasificación
+XLE 	ETF Energía 	~$57.50 	+1.5% / +2.5% 	68% 	MODERADO
+ITA 	ETF Defensa 	~$230.00 	+1.8% / +3.0% 	62% 	MODERADO
+CVX 	Acción 	~$192.00 	+2.0% / +4.0% 	60% 	RIESGOSA

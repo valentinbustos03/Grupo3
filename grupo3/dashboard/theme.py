@@ -172,16 +172,12 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
   color: rgba(255,255,255,.55); font-weight: 700;
   margin: 0 0 8px; text-align: right;
 }}
-/* Columna derecha del masthead: todo alineado a la derecha */
+/* Segmented control: shrink al contenido y empujar a la derecha */
 [data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)
-  [data-testid="stColumn"]:last-of-type {{
-  display: flex !important; flex-direction: column; align-items: flex-end;
+  [data-testid="stSegmentedControl"] {{
+  width: fit-content !important;
+  margin-left: auto !important;
 }}
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)
-  [data-testid="stColumn"]:last-of-type [data-testid="element-container"] {{
-  width: 100%;
-}}
-[data-testid="stSegmentedControl"] {{ display: flex !important; justify-content: flex-end; }}
 [data-testid="stSegmentedControl"] [role="radiogroup"] {{
   gap: 4px;
   background: rgba(255,255,255,.07);

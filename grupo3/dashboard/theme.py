@@ -91,7 +91,7 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
   50% {{ transform: translate3d(2%,-1.5%,0) scale(1.06); }}
   100% {{ transform: translate3d(0,0,0) scale(1); }}
 }}
-.block-container {{ position: relative; z-index: 1; padding-top: 2.2rem; max-width: 1180px; }}
+.block-container {{ position: relative; z-index: 1; padding-top: 2.2rem; max-width: 1300px; }}
 
 /* Glass card reutilizable */
 .glass {{
@@ -131,11 +131,48 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 .status-pill.up .dot {{ background: {VERDE}; box-shadow: 0 0 8px {VERDE}; }}
 .status-pill.down .dot {{ background: {ROJO}; box-shadow: 0 0 8px {ROJO}; }}
 
-/* Controles a la derecha del masthead */
-.ctl-label {{ font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
-  color: rgba(255,255,255,.5); margin: 0 0 6px; }}
-[data-testid="stSegmentedControl"] [role="radiogroup"] {{ gap: 4px; }}
-[data-testid="stSegmentedControl"] button {{ border-radius: 11px !important; }}
+/* Masthead = UNA tarjeta glass de ancho completo (valores EXACTOS del mockup v2).
+   El ancla .mh-anchor scopea el estilo glass solo a ESE container. */
+.mh-anchor {{ display: none; }}
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) {{
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(140% 120% at 12% -10%, rgba(255,255,255,.22), rgba(255,255,255,.05) 45%, rgba(255,255,255,.02) 100%),
+    linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  backdrop-filter: blur(42px) saturate(180%);
+  -webkit-backdrop-filter: blur(42px) saturate(180%);
+  border: 1px solid rgba(255,255,255,.18) !important;
+  border-radius: 30px !important;
+  box-shadow: 0 22px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.42),
+    inset 0 -1px 0 rgba(255,255,255,.06);
+  padding: 26px 32px !important; margin-bottom: 18px;
+}}
+/* Brillo diagonal del mockup */
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)::before {{
+  content: ""; position: absolute; top: -40%; left: -10%; width: 60%; height: 180%;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,.10), transparent);
+  transform: skewX(-18deg); pointer-events: none; }}
+
+/* Logo (reemplaza placeholder cuando hay assets/logo.*) */
+.logo-slot.has-logo {{ border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04);
+  padding: 6px; overflow: hidden; }}
+.logo-slot.has-logo img, .logo-slot.has-logo svg {{ width: 100%; height: 100%; object-fit: contain; }}
+
+/* Controles a la derecha del masthead (alineados a la derecha, estilo píldora del mockup) */
+.ctl-label {{ font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); font-weight: 700; margin: 0 0 8px; text-align: right; }}
+[data-testid="stSegmentedControl"] {{ justify-content: flex-end; }}
+[data-testid="stSegmentedControl"] [role="radiogroup"] {{ gap: 4px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
+  border-radius: 16px; padding: 5px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 24px rgba(0,0,0,.3); }}
+[data-testid="stSegmentedControl"] button {{ border: 0 !important; border-radius: 12px !important;
+  background: transparent !important; color: rgba(255,255,255,.7) !important; font-weight: 600 !important; }}
+[data-testid="stSegmentedControl"] button[aria-checked="true"],
+[data-testid="stSegmentedControl"] button[data-selected="true"],
+[data-testid="stSegmentedControl"] button[kind="segmented_controlActive"] {{
+  background: rgba(255,255,255,.14) !important; color: #fff !important; }}
+.pill-wrap {{ margin-top: 14px; display: flex; justify-content: flex-end; }}
 
 /* KPI cards */
 .kpi-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 6px; }}

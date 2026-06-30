@@ -11,18 +11,25 @@ _RIESGOS = ["Todos", "Muy segura", "Segura", "Moderado", "Riesgosa", "Muy Riesgo
 
 
 def render() -> None:
-    # Fila superior: marca (izq) + controles (der), estilo mockup v2.
-    col_l, col_r = st.columns([1.7, 1], vertical_alignment="center")
-    with col_r:
-        st.markdown('<p class="ctl-label">Horizonte</p>', unsafe_allow_html=True)
-        label_tipo = st.segmented_control(
-            "Horizonte", list(_TIPOS), default="Diario",
-            label_visibility="collapsed", key="hz",
-        )
-        riesgo = st.selectbox("Nivel de riesgo", _RIESGOS)
-        actualizar = st.button("🔄 Actualizar", width="stretch")
+    # Masthead = UNA tarjeta glass (container border) con marca (izq) +
+    # Horizonte/estado (der), como el mockup v2.
+    mast = st.container(border=True)
+    with mast:
+        st.markdown('<span class="mh-anchor"></span>', unsafe_allow_html=True)
+        col_l, col_r = st.columns([1.7, 1], vertical_alignment="center")
+        with col_r:
+            st.markdown('<p class="ctl-label">Horizonte</p>', unsafe_allow_html=True)
+            label_tipo = st.segmented_control(
+                "Horizonte", list(_TIPOS), default="Diario",
+                label_visibility="collapsed", key="hz",
+            )
 
     tipo = _TIPOS[label_tipo or "Diario"]
+
+    # Controles secundarios (no están en el mockup) van debajo del masthead.
+    sc1, sc2, _sp = st.columns([1.3, 1, 2.4])
+    riesgo = sc1.selectbox("Nivel de riesgo", _RIESGOS)
+    actualizar = sc2.button("🔄 Actualizar", width="stretch")
 
     if actualizar:
         with st.spinner("Repo → precios → veredictos…"):
@@ -52,8 +59,10 @@ def render() -> None:
     alpha_acum = k["alpha_acumulado"]
     ia_en_ventaja = None if alpha_acum is None else alpha_acum > 0
     with col_l:
-        st.markdown(componentes.masthead(ia_en_ventaja=ia_en_ventaja),
-                    unsafe_allow_html=True)
+        st.markdown(componentes.masthead(), unsafe_allow_html=True)
+    with col_r:
+        st.markdown('<div class="pill-wrap">' + componentes.status_pill(ia_en_ventaja)
+                    + '</div>', unsafe_allow_html=True)
 
     resumen = {
         "hit_rate": k["hit_rate"], "alpha_acumulado": alpha_acum, "n": k["n"],

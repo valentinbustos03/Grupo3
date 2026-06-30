@@ -62,150 +62,199 @@ def plotly_layout() -> dict:
 
 # --- CSS ---------------------------------------------------------------------
 def build_css() -> str:
-    """Devuelve el bloque <style> completo del tema."""
+    """Devuelve el bloque <style> completo del tema (fiel al mockup v2)."""
+    _GLASS_BG = (
+        "radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,.16),"
+        " rgba(255,255,255,.03) 50%, rgba(255,255,255,.02) 100%),"
+        " linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.03))"
+    )
+    _GLASS_BORDER = "1px solid rgba(255,255,255,.17)"
+    _GLASS_SHADOW = (
+        "0 20px 56px rgba(0,0,0,.42),"
+        " inset 0 1px 0 rgba(255,255,255,.34),"
+        " inset 0 -1px 0 rgba(255,255,255,.06)"
+    )
     return f"""<style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {{
-  --verde: {VERDE}; --rojo: {ROJO}; --violeta: {VIOLETA}; --cian: {CIAN};
+  --verde:{VERDE}; --rojo:{ROJO}; --violeta:{VIOLETA}; --cian:{CIAN};
 }}
 
-/* Fondo + reset del chrome de Streamlit */
-[data-testid="stAppViewContainer"] {{ background: {FONDO}; }}
+/* === Ocultar sidebar y chrome de Streamlit ========================== */
+[data-testid="stSidebar"],
+[data-testid="stSidebarNav"],
+[data-testid="collapsedControl"],
+button[kind="sidebarButton"] {{
+  display: none !important;
+}}
 [data-testid="stHeader"] {{ background: transparent; }}
 #MainMenu, footer, [data-testid="stToolbar"] {{ visibility: hidden; }}
-[data-testid="stSidebarNav"] {{ padding-top: .5rem; }}
 html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 
-/* Aurora fija detrás de todo */
+/* === Fondo + aurora (opacidades del mockup v2) ====================== */
+[data-testid="stAppViewContainer"] {{ background: {FONDO}; }}
 [data-testid="stAppViewContainer"]::before {{
   content: ""; position: fixed; inset: -8%; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(620px 520px at 10% 12%, rgba(167,139,250,.30), transparent 60%),
-    radial-gradient(680px 560px at 90% 6%, rgba(56,189,248,.22), transparent 60%),
-    radial-gradient(720px 640px at 50% 110%, rgba(74,222,128,.12), transparent 60%);
+    radial-gradient(620px 520px at 10% 12%, rgba(167,139,250,.34), transparent 60%),
+    radial-gradient(680px 560px at 90%  6%, rgba(56,189,248,.26), transparent 62%),
+    radial-gradient(720px 640px at 82% 96%, rgba(74,222,128,.24), transparent 60%),
+    radial-gradient(560px 500px at 16% 98%, rgba(248,113,113,.20), transparent 58%);
   animation: auroraShift 22s ease-in-out infinite;
 }}
+[data-testid="stAppViewContainer"]::after {{
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(5,6,10,.20), rgba(5,6,10,.66));
+}}
 @keyframes auroraShift {{
-  0% {{ transform: translate3d(0,0,0) scale(1); }}
-  50% {{ transform: translate3d(2%,-1.5%,0) scale(1.06); }}
+  0%   {{ transform: translate3d(0,0,0) scale(1); }}
+  50%  {{ transform: translate3d(2%,-1.5%,0) scale(1.06); }}
   100% {{ transform: translate3d(0,0,0) scale(1); }}
 }}
-.block-container {{ position: relative; z-index: 1; padding-top: 2.2rem; max-width: 1300px; }}
-
-/* Glass card reutilizable */
-.glass {{
-  position: relative; overflow: hidden;
-  background:
-    radial-gradient(130% 90% at 15% 0%, rgba(255,255,255,.16), rgba(255,255,255,.03) 50%, rgba(255,255,255,.02) 100%),
-    linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
-  border: 1px solid rgba(255,255,255,.16); border-radius: 22px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.18);
-  padding: 22px 24px; margin-bottom: 18px;
+.block-container {{
+  position: relative; z-index: 1;
+  padding: 26px 30px 56px !important;
+  max-width: 1300px !important;
 }}
 
-/* Masthead (marca Grupo3 + logo + estado) */
-.masthead {{ min-height: 168px; }}
-.mh-top {{ display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 16px; }}
-.brand-kicker {{ font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
-  color: rgba(255,255,255,.5); margin: 0; }}
-.brand-row {{ display: flex; align-items: center; gap: 18px; }}
-.logo-slot {{ width: 60px; height: 60px; flex: 0 0 60px; border-radius: 15px;
-  border: 1px dashed rgba(255,255,255,.22); background: rgba(255,255,255,.04);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
-  color: rgba(255,255,255,.32); text-align: center; }}
-.brand-title {{ font-family: 'IBM Plex Serif', Georgia, serif; font-weight: 700;
-  font-size: 60px; line-height: 1; margin: 0; color: #fff; letter-spacing: -.01em; }}
-.brand-3 {{ background: linear-gradient(120deg, {CIAN} 0%, {VIOLETA} 100%);
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }}
-.brand-sub {{ color: rgba(255,255,255,.6); margin: 16px 0 0; font-size: 15px; }}
-.status-pill {{ display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px;
-  border-radius: 999px; font-size: 12.5px; font-weight: 600;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
-  color: rgba(255,255,255,.85); white-space: nowrap; }}
-.status-pill .dot {{ width: 8px; height: 8px; border-radius: 50%; }}
-.status-pill.up .dot {{ background: {VERDE}; box-shadow: 0 0 8px {VERDE}; }}
-.status-pill.down .dot {{ background: {ROJO}; box-shadow: 0 0 8px {ROJO}; }}
+/* === Topnav (Panel / Metodología) ================================== */
+.topnav {{
+  display: flex; gap: 8px; justify-content: flex-end;
+  margin-bottom: 14px;
+}}
+.topnav a {{
+  text-decoration: none; padding: 5px 16px; border-radius: 999px;
+  font-size: 13px; font-weight: 600;
+  transition: background .15s, color .15s;
+}}
+.topnav a.active {{
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); color: #fff;
+}}
+.topnav a:not(.active) {{
+  background: transparent; border: 1px solid rgba(255,255,255,.10);
+  color: rgba(255,255,255,.55);
+}}
 
-/* Masthead = UNA tarjeta glass de ancho completo (valores EXACTOS del mockup v2).
-   El ancla .mh-anchor scopea el estilo glass solo a ESE container. */
+/* === Masthead (glass card del header) =============================== */
 .mh-anchor {{ display: none; }}
 [data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) {{
   position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: space-between;
   background:
-    radial-gradient(140% 120% at 12% -10%, rgba(255,255,255,.22), rgba(255,255,255,.05) 45%, rgba(255,255,255,.02) 100%),
+    radial-gradient(140% 120% at 12% -10%, rgba(255,255,255,.22),
+      rgba(255,255,255,.05) 45%, rgba(255,255,255,.02) 100%),
     linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
   backdrop-filter: blur(42px) saturate(180%);
   -webkit-backdrop-filter: blur(42px) saturate(180%);
   border: 1px solid rgba(255,255,255,.18) !important;
   border-radius: 30px !important;
-  box-shadow: 0 22px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.42),
+  box-shadow: 0 22px 60px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.42),
     inset 0 -1px 0 rgba(255,255,255,.06);
-  padding: 26px 32px !important; margin-bottom: 18px;
+  padding: 26px 32px !important; margin-bottom: 0 !important;
 }}
-/* Brillo diagonal del mockup */
 [data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)::before {{
-  content: ""; position: absolute; top: -40%; left: -10%; width: 60%; height: 180%;
+  content: ""; position: absolute; top: -40%; left: -10%;
+  width: 60%; height: 180%;
   background: linear-gradient(105deg, transparent, rgba(255,255,255,.10), transparent);
-  transform: skewX(-18deg); pointer-events: none; }}
+  transform: skewX(-18deg); pointer-events: none;
+}}
 
-/* Logo (reemplaza placeholder cuando hay assets/logo.*) */
-.logo-slot.has-logo {{ border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04);
-  padding: 6px; overflow: hidden; }}
-.logo-slot.has-logo img, .logo-slot.has-logo svg {{ width: 100%; height: 100%; object-fit: contain; }}
-
-/* Controles a la derecha del masthead (alineados a la derecha, estilo píldora del mockup) */
-.ctl-label {{ font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  color: rgba(255,255,255,.55); font-weight: 700; margin: 0 0 8px; text-align: right; }}
+/* Controles derecha del masthead */
+.ctl-label {{
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); font-weight: 700;
+  margin: 0 0 8px; text-align: right;
+}}
 [data-testid="stSegmentedControl"] {{ justify-content: flex-end; }}
-[data-testid="stSegmentedControl"] [role="radiogroup"] {{ gap: 4px;
-  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
+[data-testid="stSegmentedControl"] [role="radiogroup"] {{
+  gap: 4px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.16);
   border-radius: 16px; padding: 5px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 24px rgba(0,0,0,.3); }}
-[data-testid="stSegmentedControl"] button {{ border: 0 !important; border-radius: 12px !important;
-  background: transparent !important; color: rgba(255,255,255,.7) !important; font-weight: 600 !important; }}
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 24px rgba(0,0,0,.3);
+}}
+[data-testid="stSegmentedControl"] button {{
+  border: 0 !important; border-radius: 12px !important;
+  background: transparent !important;
+  color: rgba(255,255,255,.7) !important; font-weight: 600 !important;
+}}
 [data-testid="stSegmentedControl"] button[aria-checked="true"],
 [data-testid="stSegmentedControl"] button[data-selected="true"],
 [data-testid="stSegmentedControl"] button[kind="segmented_controlActive"] {{
-  background: rgba(255,255,255,.14) !important; color: #fff !important; }}
+  background: rgba(255,255,255,.14) !important; color: #fff !important;
+}}
 .pill-wrap {{ margin-top: 14px; display: flex; justify-content: flex-end; }}
 
-/* KPI cards */
-.kpi-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 6px; }}
-.kpi-label {{ font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-  color: rgba(255,255,255,.55); margin: 0 0 10px; }}
-.kpi-value {{ font-family: 'JetBrains Mono', monospace; font-size: 38px; font-weight: 700;
-  line-height: 1; margin: 0; }}
-.kpi-value .grad {{ background: linear-gradient(120deg, {CIAN}, {VIOLETA});
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }}
-.kpi-note {{ font-size: 12.5px; color: rgba(255,255,255,.5); margin: 10px 0 0; }}
-.pos {{ color: {VERDE}; }} .neg {{ color: {ROJO}; }} .muted {{ color: rgba(255,255,255,.7); }}
+/* === KPI cards ====================================================== */
+.kpi-grid {{
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-bottom: 0;
+}}
 
-/* Tabla ledger */
-.ledger {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
-.ledger th {{ text-align: left; font-weight: 600; color: rgba(255,255,255,.55);
-  font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase;
-  padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,.12); }}
-.ledger td {{ padding: 11px 12px; border-bottom: 1px solid rgba(255,255,255,.06);
-  color: rgba(255,255,255,.86); }}
-.ledger td.num {{ font-family: 'JetBrains Mono', monospace; text-align: right; }}
-.ledger tr:hover td {{ background: rgba(255,255,255,.03); }}
+/* === Chart/Table glass containers (anchor: .gc) ==================== */
+.gc {{ display: none; }}
+[data-testid="stVerticalBlockBorderWrapper"]:has(.gc) {{
+  position: relative; overflow: hidden;
+  background: {_GLASS_BG};
+  backdrop-filter: blur(42px) saturate(180%);
+  -webkit-backdrop-filter: blur(42px) saturate(180%);
+  border: {_GLASS_BORDER} !important;
+  border-radius: 28px !important;
+  box-shadow: {_GLASS_SHADOW};
+  padding: 22px 24px 16px !important; margin-bottom: 0 !important;
+}}
+
+/* === Tabla ledger =================================================== */
+.ledger {{ width: 100%; border-collapse: collapse; font-size: 13.5px; }}
+.ledger th {{
+  text-align: left; font-weight: 700; color: rgba(255,255,255,.5);
+  font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
+  padding: 0 12px 11px; border-bottom: 1px solid rgba(255,255,255,.12);
+}}
+.ledger td {{
+  padding: 13px 12px; border-bottom: 1px solid rgba(255,255,255,.07);
+  color: rgba(255,255,255,.86);
+}}
+.ledger td.num {{
+  font-family: 'JetBrains Mono', monospace; text-align: right;
+}}
+.ledger tr:hover td {{ background: rgba(255,255,255,.04); }}
+
+/* Barra de confianza */
+.conf-bar-wrap {{
+  display: flex; align-items: center; gap: 9px;
+}}
+.conf-bar {{
+  flex: 1; height: 6px; background: rgba(255,255,255,.12);
+  border-radius: 3px; overflow: hidden; max-width: 100px;
+}}
+.conf-bar-fill {{
+  height: 100%; background: {VERDE}; border-radius: 3px;
+}}
 
 /* Badges */
-.badge {{ display: inline-block; padding: 3px 10px; border-radius: 999px;
-  font-size: 12px; font-weight: 600; border: 1px solid; white-space: nowrap; }}
+.badge {{
+  display: inline-block; padding: 4px 11px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 600; border: 1px solid; white-space: nowrap;
+}}
 
-/* Metodología */
+.pos {{ color: {VERDE}; }} .neg {{ color: {ROJO}; }}
+
+/* === Metodología ==================================================== */
 .doc h2 {{ color: #fff; font-size: 22px; margin: 4px 0 8px; }}
-.doc p, .doc li {{ color: rgba(255,255,255,.78); line-height: 1.6; font-size: 15px; }}
-.doc code {{ background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace; font-size: 13px; }}
-.flow {{ font-family: 'JetBrains Mono', monospace; color: rgba(255,255,255,.82);
-  font-size: 13.5px; line-height: 1.9; }}
+.doc p, .doc li {{
+  color: rgba(255,255,255,.78); line-height: 1.6; font-size: 15px;
+}}
+.doc code {{
+  background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+}}
+.flow {{
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255,255,255,.82); font-size: 13.5px; line-height: 1.9;
+}}
 </style>"""
 
 

@@ -4,22 +4,40 @@ from __future__ import annotations
 import streamlit as st
 
 from grupo3 import config
-from grupo3.dashboard import theme
+from grupo3.dashboard import componentes, theme
+
+_GLASS_CARD = (
+    "position:relative; overflow:hidden;"
+    " background:radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,.16),"
+    " rgba(255,255,255,.03) 50%, rgba(255,255,255,.02) 100%),"
+    " linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.03));"
+    " backdrop-filter:blur(42px) saturate(180%);"
+    " -webkit-backdrop-filter:blur(42px) saturate(180%);"
+    " border:1px solid rgba(255,255,255,.17); border-radius:28px;"
+    " box-shadow:0 20px 56px rgba(0,0,0,.42),"
+    " inset 0 1px 0 rgba(255,255,255,.34), inset 0 -1px 0 rgba(255,255,255,.06);"
+    " padding:22px 24px; margin-bottom:16px;"
+)
 
 
 def _seccion(titulo: str, cuerpo_html: str) -> None:
     st.markdown(
-        f'<div class="glass doc"><h2>{titulo}</h2>{cuerpo_html}</div>',
+        f'<div style="{_GLASS_CARD}" class="doc"><h2>{titulo}</h2>{cuerpo_html}</div>',
         unsafe_allow_html=True,
     )
 
 
 def render() -> None:
+    st.markdown(componentes.topnav("metodologia"), unsafe_allow_html=True)
     st.markdown(
-        '<div class="glass"><p class="masthead-kicker">Grupo 3 · Documentación</p>'
-        '<h1 class="masthead-title">Metodología</h1>'
-        '<p class="masthead-sub">Cómo se generan los análisis, qué se mide y cómo '
-        'se construyó este dashboard.</p></div>',
+        f'<div style="{_GLASS_CARD}">'
+        '<div style="font-size:11.5px; letter-spacing:.18em; text-transform:uppercase;'
+        ' color:rgba(255,255,255,.55); font-weight:700; margin-bottom:8px;">Grupo 3 · Documentación</div>'
+        '<div style="font-size:36px; font-weight:700; color:#fff;'
+        ' font-family:\'IBM Plex Serif\',serif; margin-bottom:10px;">Metodología</div>'
+        '<div style="font-size:14px; color:rgba(255,255,255,.66);">'
+        'Cómo se generan los análisis, qué se mide y cómo se construyó este dashboard.</div>'
+        '</div>',
         unsafe_allow_html=True,
     )
 

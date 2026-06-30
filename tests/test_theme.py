@@ -30,5 +30,5 @@ def test_build_css_incluye_aurora_y_glass():
     css = theme.build_css()
     assert css.strip().startswith("<style>")
     assert "auroraShift" in css
-    assert ".glass" in css
+    assert ".gc" in css  # glass anchor para chart cards
     assert theme.FONDO in css

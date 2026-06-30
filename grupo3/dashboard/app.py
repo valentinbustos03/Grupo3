@@ -15,6 +15,7 @@ def render() -> None:
         page_title="Grupo3 · IA vs S&P 500",
         page_icon="📈",
         layout="wide",
+        initial_sidebar_state="collapsed",
     )
     inject_css()
 

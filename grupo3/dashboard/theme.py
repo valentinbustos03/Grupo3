@@ -28,6 +28,18 @@ RIESGO_COLOR = {
 VEREDICTO_COLOR = {"GANO": VERDE, "PERDIO": ROJO, "NEUTRO": NEUTRO}
 
 
+def rgba(hex_color: str, alpha: float) -> str:
+    """Token hex ``#rrggbb`` -> string ``rgba(r,g,b,alpha)``.
+
+    Plotly no acepta hex con alpha (#rrggbbaa); para tintes translúcidos
+    derivados de la paleta se convierte acá, manteniendo una sola fuente de
+    verdad del color.
+    """
+    h = hex_color.lstrip("#")
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    return f"rgba({r},{g},{b},{alpha})"
+
+
 # --- Plotly ------------------------------------------------------------------
 def plotly_layout() -> dict:
     """Kwargs comunes para ``fig.update_layout`` (no incluye títulos de eje)."""

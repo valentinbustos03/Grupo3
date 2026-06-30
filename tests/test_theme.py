@@ -21,6 +21,11 @@ def test_plotly_layout_transparente():
     assert "Inter" in lay["font"]["family"]
 
 
+def test_rgba_convierte_hex_a_rgba():
+    assert theme.rgba(theme.VERDE, 0.10) == "rgba(74,222,128,0.1)"
+    assert theme.rgba("#a78bfa", 0.6) == "rgba(167,139,250,0.6)"
+
+
 def test_build_css_incluye_aurora_y_glass():
     css = theme.build_css()
     assert css.strip().startswith("<style>")

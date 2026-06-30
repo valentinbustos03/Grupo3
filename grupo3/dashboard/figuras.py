@@ -14,7 +14,7 @@ def fig_equity(df_equity: pd.DataFrame) -> go.Figure:
         fig.add_trace(go.Scatter(
             x=df_equity["fecha"], y=df_equity["recos_acum"], name="IA",
             mode="lines", line={"color": theme.VERDE, "width": 2.6},
-            fill="tozeroy", fillcolor="rgba(74,222,128,.10)",
+            fill="tozeroy", fillcolor=theme.rgba(theme.VERDE, 0.10),
         ))
         fig.add_trace(go.Scatter(
             x=df_equity["fecha"], y=df_equity["sp500_acum"], name="S&P 500",
@@ -31,7 +31,7 @@ def fig_calibracion(df_tramos: pd.DataFrame) -> go.Figure:
     if df_tramos is not None and not df_tramos.empty:
         fig.add_trace(go.Bar(
             x=df_tramos["tramo"], y=df_tramos["conf_media"],
-            name="Confianza declarada", marker_color="rgba(167,139,250,.6)",
+            name="Confianza declarada", marker_color=theme.rgba(theme.VIOLETA, 0.6),
         ))
         fig.add_trace(go.Bar(
             x=df_tramos["tramo"], y=df_tramos["aciertos_pct"],

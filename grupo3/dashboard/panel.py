@@ -17,7 +17,7 @@ def render() -> None:
     f1, f2, f3 = st.columns([1.2, 1.2, 1])
     label_tipo = f1.radio("Horizonte", list(_TIPOS), horizontal=True)
     riesgo = f2.selectbox("Nivel de riesgo", _RIESGOS)
-    if f3.button("🔄 Actualizar", use_container_width=True):
+    if f3.button("🔄 Actualizar", width="stretch"):
         with st.spinner("Repo → precios → veredictos…"):
             r_ing, r_cal = datos.actualizar()
         st.success(
@@ -52,7 +52,7 @@ def render() -> None:
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.markdown("##### Fig. 1 · Curva de retorno acumulado")
     st.plotly_chart(figuras.fig_equity(metricas.equity_curve(df)),
-                    use_container_width=True, config={"displayModeBar": False})
+                    width="stretch", config={"displayModeBar": False})
     st.markdown("</div>", unsafe_allow_html=True)
 
     # --- Fig 2: candlestick comparativo ---
@@ -72,7 +72,7 @@ def render() -> None:
         ticker, t_tipo, fecha, veredicto = opciones[sel]
         try:
             fig = figuras.fig_candlestick(ticker, t_tipo, fecha, veredicto=veredicto)
-            st.plotly_chart(fig, use_container_width=True,
+            st.plotly_chart(fig, width="stretch",
                             config={"displayModeBar": False})
         except Exception as e:  # noqa: BLE001 — feriado/sin red no debe romper la vista
             st.markdown(
@@ -85,7 +85,7 @@ def render() -> None:
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.markdown("##### Fig. 3 · Calibración — confianza declarada vs aciertos")
     st.plotly_chart(figuras.fig_calibracion(metricas.calibracion_por_tramo(df)),
-                    use_container_width=True, config={"displayModeBar": False})
+                    width="stretch", config={"displayModeBar": False})
     st.markdown("</div>", unsafe_allow_html=True)
 
     # --- Tabla ---

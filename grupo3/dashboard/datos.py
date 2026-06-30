@@ -23,8 +23,12 @@ def aplicar_filtros(df: pd.DataFrame, riesgo: str | None) -> pd.DataFrame:
 
 @st.cache_resource
 def conn():
-    """Conexión SQLite cacheada. Bootstrap (ingesta + cálculo) si la base está vacía."""
-    c = db.connect()
+    """Conexión SQLite cacheada. Bootstrap (ingesta + cálculo) si la base está vacía.
+
+    ``check_same_thread=False``: la conexión se comparte entre los threads de
+    rerun de Streamlit (cache_resource), que no son el thread donde se creó.
+    """
+    c = db.connect(check_same_thread=False)
     db.init_db(c)
     if c.execute("SELECT COUNT(*) FROM analisis").fetchone()[0] == 0:
         try:

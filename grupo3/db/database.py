@@ -14,9 +14,15 @@ from grupo3 import config
 _SCHEMA = Path(__file__).with_name("schema.sql")
 
 
-def connect(db_path: str | None = None) -> sqlite3.Connection:
-    """Conexión con foreign keys activas y filas accesibles por nombre."""
-    conn = sqlite3.connect(db_path or config.DB_PATH)
+def connect(db_path: str | None = None, check_same_thread: bool = True) -> sqlite3.Connection:
+    """Conexión con foreign keys activas y filas accesibles por nombre.
+
+    ``check_same_thread=False`` permite reusar la conexión entre threads: lo
+    necesita el dashboard, donde la conexión se cachea con ``st.cache_resource``
+    y Streamlit corre cada rerun en un thread distinto (acceso serializado de un
+    solo usuario, así que es seguro). El pipeline/tests usan el default seguro.
+    """
+    conn = sqlite3.connect(db_path or config.DB_PATH, check_same_thread=check_same_thread)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
     return conn

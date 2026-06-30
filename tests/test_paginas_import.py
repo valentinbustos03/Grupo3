@@ -10,3 +10,8 @@ def test_panel_tiene_render():
 def test_metodologia_tiene_render():
     mod = importlib.import_module("grupo3.dashboard.metodologia")
     assert callable(mod.render)
+
+
+def test_app_expone_render():
+    mod = importlib.import_module("grupo3.dashboard.app")
+    assert callable(mod.render)

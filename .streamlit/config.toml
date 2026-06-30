@@ -1,10 +1,9 @@
-# Tema dark "fintech" — evita el look default de Streamlit.
-# El CSS fino (badges, KPI cards) se inyecta desde el dashboard.
+# Tema dark "Liquid Glass" — el CSS fino se inyecta desde grupo3/dashboard/theme.py
 [theme]
 base = "dark"
-primaryColor = "#22c55e"            # verde acento (ganó)
-backgroundColor = "#0b0f14"         # fondo casi negro
-secondaryBackgroundColor = "#141a21" # cards / sidebar
+primaryColor = "#4ade80"             # verde acento (ganó)
+backgroundColor = "#05060a"          # fondo near-black
+secondaryBackgroundColor = "#0c1018" # cards / sidebar
 textColor = "#e6edf3"
 font = "sans serif"
 

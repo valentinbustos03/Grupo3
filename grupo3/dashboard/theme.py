@@ -64,9 +64,9 @@ def plotly_layout() -> dict:
 def build_css() -> str:
     """Devuelve el bloque <style> completo del tema (fiel al mockup v2)."""
     _GLASS_BG = (
-        "radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,.16),"
-        " rgba(255,255,255,.03) 50%, rgba(255,255,255,.02) 100%),"
-        " linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.03))"
+        "radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,.22),"
+        " rgba(255,255,255,.05) 50%, rgba(255,255,255,.02) 100%),"
+        " linear-gradient(160deg, rgba(255,255,255,.13), rgba(255,255,255,.04))"
     )
     _GLASS_BORDER = "1px solid rgba(255,255,255,.17)"
     _GLASS_SHADOW = (
@@ -97,10 +97,10 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 [data-testid="stAppViewContainer"]::before {{
   content: ""; position: fixed; inset: -8%; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(620px 520px at 10% 12%, rgba(167,139,250,.34), transparent 60%),
-    radial-gradient(680px 560px at 90%  6%, rgba(56,189,248,.26), transparent 62%),
-    radial-gradient(720px 640px at 82% 96%, rgba(74,222,128,.24), transparent 60%),
-    radial-gradient(560px 500px at 16% 98%, rgba(248,113,113,.20), transparent 58%);
+    radial-gradient(620px 520px at 10% 12%, rgba(167,139,250,.42), transparent 60%),
+    radial-gradient(680px 560px at 90%  6%, rgba(56,189,248,.33), transparent 62%),
+    radial-gradient(720px 640px at 82% 96%, rgba(74,222,128,.30), transparent 60%),
+    radial-gradient(560px 500px at 16% 98%, rgba(248,113,113,.26), transparent 58%);
   animation: auroraShift 22s ease-in-out infinite;
 }}
 [data-testid="stAppViewContainer"]::after {{
@@ -140,25 +140,29 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 .mh-anchor {{ display: none; }}
 [data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) {{
   position: relative; overflow: hidden;
-  display: flex; align-items: center; justify-content: space-between;
   background:
-    radial-gradient(140% 120% at 12% -10%, rgba(255,255,255,.22),
-      rgba(255,255,255,.05) 45%, rgba(255,255,255,.02) 100%),
-    linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-  backdrop-filter: blur(42px) saturate(180%);
-  -webkit-backdrop-filter: blur(42px) saturate(180%);
-  border: 1px solid rgba(255,255,255,.18) !important;
-  border-radius: 30px !important;
-  box-shadow: 0 22px 60px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.42),
-    inset 0 -1px 0 rgba(255,255,255,.06);
-  padding: 26px 32px !important; margin-bottom: 0 !important;
+    radial-gradient(140% 120% at 12% -10%, rgba(255,255,255,.26),
+      rgba(255,255,255,.06) 45%, rgba(255,255,255,.02) 100%),
+    linear-gradient(160deg, rgba(255,255,255,.13), rgba(255,255,255,.04));
+  backdrop-filter: blur(48px) saturate(200%);
+  -webkit-backdrop-filter: blur(48px) saturate(200%);
+  border: 1px solid rgba(255,255,255,.22) !important;
+  border-radius: 28px !important;
+  box-shadow: 0 22px 60px rgba(0,0,0,.50),
+    inset 0 1.5px 0 rgba(255,255,255,.50),
+    inset 0 -1px 0 rgba(255,255,255,.08);
+  padding: 28px 32px 22px !important; margin-bottom: 20px !important;
 }}
 [data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)::before {{
   content: ""; position: absolute; top: -40%; left: -10%;
   width: 60%; height: 180%;
-  background: linear-gradient(105deg, transparent, rgba(255,255,255,.10), transparent);
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,.12), transparent);
   transform: skewX(-18deg); pointer-events: none;
+}}
+/* divisor interno del masthead */
+.mh-sep {{
+  border: none; border-top: 1px solid rgba(255,255,255,.10);
+  margin: 16px 0 12px;
 }}
 
 /* Controles derecha del masthead */
@@ -187,10 +191,32 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 }}
 .pill-wrap {{ margin-top: 14px; display: flex; justify-content: flex-end; }}
 
+/* Selectbox dentro del glass card */
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) [data-testid="stSelectbox"] > div > div {{
+  background: rgba(255,255,255,.07) !important;
+  border: 1px solid rgba(255,255,255,.16) !important;
+  border-radius: 12px !important;
+  color: rgba(255,255,255,.85) !important;
+}}
+
+/* Botón Actualizar — ghost pill */
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) button[kind="secondary"] {{
+  background: rgba(255,255,255,.08) !important;
+  border: 1px solid rgba(255,255,255,.20) !important;
+  border-radius: 12px !important;
+  color: rgba(255,255,255,.85) !important;
+  font-weight: 600 !important;
+  transition: background .15s !important;
+}}
+[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) button[kind="secondary"]:hover {{
+  background: rgba(255,255,255,.14) !important;
+  border-color: rgba(255,255,255,.30) !important;
+}}
+
 /* === KPI cards ====================================================== */
 .kpi-grid {{
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }}
 
 /* === Chart/Table glass containers (anchor: .gc) ==================== */
@@ -203,7 +229,7 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
   border: {_GLASS_BORDER} !important;
   border-radius: 28px !important;
   box-shadow: {_GLASS_SHADOW};
-  padding: 22px 24px 16px !important; margin-bottom: 0 !important;
+  padding: 22px 24px 16px !important; margin-bottom: 20px !important;
 }}
 
 /* === Tabla ledger =================================================== */

@@ -48,8 +48,8 @@ def badge_veredicto(v: str | None) -> str:
 def topnav(active: str) -> str:
     """Barra de navegación horizontal (Panel / Metodología)."""
     items = [
-        ("📊 Panel", "/panel", "panel"),
-        ("📖 Metodología", "/metodologia", "metodologia"),
+        ("Panel", "/panel", "panel"),
+        ("Metodología", "/metodologia", "metodologia"),
     ]
     links = []
     for label, href, key in items:

@@ -27,13 +27,13 @@ def render() -> None:
                 "Horizonte", list(_TIPOS), default="Diario",
                 label_visibility="collapsed", key="hz",
             )
+        # Controles integrados en el masthead
+        st.markdown('<hr class="mh-sep">', unsafe_allow_html=True)
+        ctl_l, ctl_r, _ = st.columns([1.5, 1.1, 2.2])
+        riesgo     = ctl_l.selectbox("Nivel de riesgo", _RIESGOS, label_visibility="visible")
+        actualizar = ctl_r.button("↻  Actualizar", width="stretch")
 
     tipo = _TIPOS[label_tipo or "Diario"]
-
-    # --- Controles secundarios (riesgo + actualizar) -----------------------
-    sc1, sc2, _sp = st.columns([1.3, 1, 2.4])
-    riesgo     = sc1.selectbox("Nivel de riesgo", _RIESGOS, label_visibility="visible")
-    actualizar = sc2.button("🔄 Actualizar", width="stretch")
 
     if actualizar:
         with st.spinner("Repo → precios → veredictos…"):

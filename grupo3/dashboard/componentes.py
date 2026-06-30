@@ -110,17 +110,14 @@ def status_pill(ia_en_ventaja: bool | None) -> str:
     )
 
 
-# Estilos inline de las KPI cards, copiados exactos del mockup v2.
+# KPI cards = receta glass compartida (theme.GLASS_*), única fuente de verdad.
 _KPI_CARD = (
     "position:relative; overflow:hidden;"
-    " background:radial-gradient(130% 90% at 15% 0%, rgba(255,255,255,.20),"
-    " rgba(255,255,255,.04) 45%, rgba(255,255,255,.02) 100%),"
-    " linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.03));"
-    " backdrop-filter:blur(40px) saturate(180%);"
-    " -webkit-backdrop-filter:blur(40px) saturate(180%);"
-    " border:1px solid rgba(255,255,255,.18); border-radius:26px;"
-    " box-shadow:0 18px 50px rgba(0,0,0,.40), inset 0 1px 0 rgba(255,255,255,.35),"
-    " inset 0 -1px 0 rgba(255,255,255,.06); padding:20px 22px;"
+    f" background:{theme.GLASS_BG};"
+    f" backdrop-filter:{theme.GLASS_BLUR};"
+    f" -webkit-backdrop-filter:{theme.GLASS_BLUR};"
+    f" border:{theme.GLASS_BORDER}; border-radius:{theme.GLASS_RADIUS};"
+    f" box-shadow:{theme.GLASS_SHADOW}; padding:20px 22px;"
 )
 _KPI_LBL  = ("font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;"
              " color:rgba(255,255,255,.6); font-weight:700;")
@@ -241,12 +238,12 @@ def tabla_recos(df: pd.DataFrame) -> str:
     n_activos = len(df)
     cabecera = (
         "<tr>"
-        "<th>Activo</th><th style='text-align:right'>P. entrada</th>"
-        "<th style='text-align:right'>Crec. est.</th>"
-        "<th style='text-align:right'>Retorno real</th>"
-        "<th style='text-align:right'>Alpha</th>"
+        "<th>Activo</th><th>P. entrada</th>"
+        "<th>Crec. est.</th>"
+        "<th>Retorno real</th>"
+        "<th>Alpha</th>"
         "<th>Confianza</th><th>Riesgo</th>"
-        "<th style='text-align:center'>Veredicto</th>"
+        "<th>Veredicto</th>"
         "</tr>"
     )
     tabla_inner = (

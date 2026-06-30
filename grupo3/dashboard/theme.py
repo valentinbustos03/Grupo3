@@ -27,6 +27,24 @@ RIESGO_COLOR = {
 }
 VEREDICTO_COLOR = {"GANO": VERDE, "PERDIO": ROJO, "NEUTRO": NEUTRO}
 
+# --- Glass (liquid glass) — receta ÚNICA compartida por TODAS las cards -------
+# Fuente de verdad: masthead, KPI cards y chart/table cards usan estos valores
+# para garantizar los mismos bordes y el mismo degradé.
+GLASS_BG = (
+    "radial-gradient(130% 90% at 15% 0%, rgba(255,255,255,.20),"
+    " rgba(255,255,255,.04) 45%, rgba(255,255,255,.02) 100%),"
+    " linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.03)),"
+    " rgba(255,255,255,.05)"  # escarcha uniforme: glass parejo en cards grandes
+)
+GLASS_BORDER = "1px solid rgba(255,255,255,.18)"
+GLASS_RADIUS = "26px"
+GLASS_SHADOW = (
+    "0 18px 50px rgba(0,0,0,.40),"
+    " inset 0 1px 0 rgba(255,255,255,.35),"
+    " inset 0 -1px 0 rgba(255,255,255,.06)"
+)
+GLASS_BLUR = "blur(40px) saturate(180%)"
+
 
 def rgba(hex_color: str, alpha: float) -> str:
     """Token hex ``#rrggbb`` -> string ``rgba(r,g,b,alpha)``.
@@ -63,17 +81,6 @@ def plotly_layout() -> dict:
 # --- CSS ---------------------------------------------------------------------
 def build_css() -> str:
     """Devuelve el bloque <style> completo del tema (fiel al mockup v2)."""
-    _GLASS_BG = (
-        "radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,.22),"
-        " rgba(255,255,255,.05) 50%, rgba(255,255,255,.02) 100%),"
-        " linear-gradient(160deg, rgba(255,255,255,.13), rgba(255,255,255,.04))"
-    )
-    _GLASS_BORDER = "1px solid rgba(255,255,255,.17)"
-    _GLASS_SHADOW = (
-        "0 20px 56px rgba(0,0,0,.42),"
-        " inset 0 1px 0 rgba(255,255,255,.34),"
-        " inset 0 -1px 0 rgba(255,255,255,.06)"
-    )
     return f"""<style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
@@ -138,23 +145,17 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 
 /* === Masthead (glass card del header) =============================== */
 .mh-anchor {{ display: none; }}
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor),
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) > div {{
+[data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .mh-anchor) {{
   position: relative; overflow: hidden;
-  background:
-    radial-gradient(140% 120% at 12% -10%, rgba(255,255,255,.26),
-      rgba(255,255,255,.06) 45%, rgba(255,255,255,.02) 100%),
-    linear-gradient(160deg, rgba(255,255,255,.13), rgba(255,255,255,.04));
-  backdrop-filter: blur(48px) saturate(200%);
-  -webkit-backdrop-filter: blur(48px) saturate(200%);
-  border: 1px solid rgba(255,255,255,.22) !important;
-  border-radius: 28px !important;
-  box-shadow: 0 22px 60px rgba(0,0,0,.50),
-    inset 0 1.5px 0 rgba(255,255,255,.50),
-    inset 0 -1px 0 rgba(255,255,255,.08);
+  background: {GLASS_BG} !important;
+  backdrop-filter: {GLASS_BLUR};
+  -webkit-backdrop-filter: {GLASS_BLUR};
+  border: {GLASS_BORDER} !important;
+  border-radius: {GLASS_RADIUS} !important;
+  box-shadow: {GLASS_SHADOW};
   padding: 28px 32px 22px !important; margin-bottom: 20px !important;
 }}
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)::before {{
+[data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .mh-anchor)::before {{
   content: ""; position: absolute; top: -40%; left: -10%;
   width: 60%; height: 180%;
   background: linear-gradient(105deg, transparent, rgba(255,255,255,.12), transparent);
@@ -173,37 +174,37 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
   margin: 0 0 8px; text-align: right;
 }}
 /* Columna derecha del masthead: alinear a la derecha via text-align */
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)
+[data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .mh-anchor)
   [data-testid="stColumn"]:has(.ctl-label) {{
   text-align: right !important;
 }}
-/* stSegmentedControl como inline-block respeta text-align del padre */
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor)
-  [data-testid="stColumn"]:has(.ctl-label)
-  [data-testid="stSegmentedControl"] {{
-  display: inline-block !important;
+/* Segmented control flush a la derecha, bajo HORIZONTE.
+   La caja del control (element-container) es content-width y queda a la izq
+   de la columna; align-self:flex-end la lleva al borde derecho de col_r. */
+[data-testid="stElementContainer"]:has([data-testid="stButtonGroup"]) {{
+  align-self: flex-end !important;
 }}
-[data-testid="stSegmentedControl"] [role="radiogroup"] {{
+[data-testid="stButtonGroup"] [role="radiogroup"] {{
   gap: 4px;
   background: rgba(255,255,255,.07);
   border: 1px solid rgba(255,255,255,.16);
   border-radius: 16px; padding: 5px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 24px rgba(0,0,0,.3);
 }}
-[data-testid="stSegmentedControl"] button {{
+[data-testid="stButtonGroup"] button {{
   border: 0 !important; border-radius: 12px !important;
   background: transparent !important;
   color: rgba(255,255,255,.7) !important; font-weight: 600 !important;
 }}
-[data-testid="stSegmentedControl"] button[aria-checked="true"],
-[data-testid="stSegmentedControl"] button[data-selected="true"],
-[data-testid="stSegmentedControl"] button[kind="segmented_controlActive"] {{
+[data-testid="stButtonGroup"] button[aria-checked="true"],
+[data-testid="stButtonGroup"] button[data-selected="true"],
+[data-testid="stButtonGroup"] button[kind="segmented_controlActive"] {{
   background: rgba(255,255,255,.14) !important; color: #fff !important;
 }}
 .pill-wrap {{ margin-top: 14px; display: flex; justify-content: flex-end; }}
 
 /* Selectbox dentro del glass card */
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) [data-testid="stSelectbox"] > div > div {{
+[data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .mh-anchor) [data-testid="stSelectbox"] > div > div {{
   background: rgba(255,255,255,.07) !important;
   border: 1px solid rgba(255,255,255,.16) !important;
   border-radius: 12px !important;
@@ -211,7 +212,7 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 }}
 
 /* Botón Actualizar — ghost pill */
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) button[kind="secondary"] {{
+[data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .mh-anchor) button[kind="secondary"] {{
   background: rgba(255,255,255,.08) !important;
   border: 1px solid rgba(255,255,255,.20) !important;
   border-radius: 12px !important;
@@ -219,7 +220,7 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
   font-weight: 600 !important;
   transition: background .15s !important;
 }}
-[data-testid="stVerticalBlockBorderWrapper"]:has(.mh-anchor) button[kind="secondary"]:hover {{
+[data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .mh-anchor) button[kind="secondary"]:hover {{
   background: rgba(255,255,255,.14) !important;
   border-color: rgba(255,255,255,.30) !important;
 }}
@@ -232,31 +233,46 @@ html, body, [class*="css"] {{ font-family: 'Inter', system-ui, sans-serif; }}
 
 /* === Chart/Table glass containers (anchor: .gc) ==================== */
 .gc {{ display: none; }}
-[data-testid="stVerticalBlockBorderWrapper"]:has(.gc),
-[data-testid="stVerticalBlockBorderWrapper"]:has(.gc) > div {{
+[data-testid="stVerticalBlock"]:has(> [data-testid="stElementContainer"] .gc) {{
   position: relative; overflow: hidden;
-  background: {_GLASS_BG};
-  backdrop-filter: blur(42px) saturate(180%);
-  -webkit-backdrop-filter: blur(42px) saturate(180%);
-  border: {_GLASS_BORDER} !important;
-  border-radius: 28px !important;
-  box-shadow: {_GLASS_SHADOW};
+  background: {GLASS_BG} !important;
+  backdrop-filter: {GLASS_BLUR};
+  -webkit-backdrop-filter: {GLASS_BLUR};
+  border: {GLASS_BORDER} !important;
+  border-radius: {GLASS_RADIUS} !important;
+  box-shadow: {GLASS_SHADOW};
   padding: 22px 24px 16px !important; margin-bottom: 20px !important;
+}}
+/* Dos charts lado a lado: misma altura. La columna estira al row y TODOS los
+   bloques intermedios + la card glass ocupan el 100% (la más corta se rellena). */
+[data-testid="stHorizontalBlock"]:has(.gc) > [data-testid="stColumn"] {{
+  align-self: stretch !important;
+}}
+[data-testid="stHorizontalBlock"]:has(.gc) > [data-testid="stColumn"]
+  [data-testid="stVerticalBlock"] {{
+  height: 100% !important;
 }}
 
 /* === Tabla ledger =================================================== */
 .ledger {{ width: 100%; border-collapse: collapse; font-size: 13.5px; }}
 .ledger th {{
-  text-align: left; font-weight: 700; color: rgba(255,255,255,.5);
-  font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
-  padding: 0 12px 11px; border-bottom: 1px solid rgba(255,255,255,.12);
+  text-align: center; vertical-align: middle;
+  font-weight: 700; color: rgba(255,255,255,.5);
+  font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,.12);
+  white-space: nowrap;
 }}
 .ledger td {{
-  padding: 13px 12px; border-bottom: 1px solid rgba(255,255,255,.07);
-  color: rgba(255,255,255,.86);
+  padding: 15px 16px; border-bottom: 1px solid rgba(255,255,255,.07);
+  color: rgba(255,255,255,.86); vertical-align: middle; line-height: 1.35;
+  white-space: nowrap;
 }}
+/* respiro en los bordes: primera col más a la izq, última más a la der */
+.ledger th:first-child, .ledger td:first-child {{ padding-left: 4px; }}
+.ledger th:last-child,  .ledger td:last-child  {{ padding-right: 4px; }}
 .ledger td.num {{
   font-family: 'JetBrains Mono', monospace; text-align: right;
+  font-variant-numeric: tabular-nums;
 }}
 .ledger tr:hover td {{ background: rgba(255,255,255,.04); }}
 

@@ -46,8 +46,14 @@ grupo3/
     veredicto.py            # alpha y veredicto relativo al S&P 500
     metricas.py             # métricas agregadas (Etapa 2)
     candlestick.py          # candlestick comparativo normalizado (Etapa 2b)
-  dashboard/
-    app.py                  # UI Streamlit
+  dashboard/                # UI Streamlit (Etapa 3)
+    app.py                  # entrypoint: tema + st.navigation (Panel + Metodología)
+    theme.py                # tokens de color, layout Plotly, CSS "Liquid Glass"
+    componentes.py          # builders HTML puros (masthead, KPI cards, tabla, badges)
+    figuras.py              # figuras Plotly (equity, calibración, candlestick)
+    datos.py                # conexión cacheada + filtros + acción Actualizar
+    panel.py                # página principal (KPIs, figuras, tabla)
+    metodologia.py          # página de documentación del experimento
 ```
 
 ## Setup local
@@ -81,8 +87,10 @@ cuota, se pasa un token (ver *Deploy*).
   (`[data-analisis]`, `data-tipo`, `data-fecha`, `data-formato-version`, `[data-reco]`,
   `data-activo`, `data-campo="..."`).
 - **v1 (histórico, inconsistente):** parser tolerante; lo que no se puede extraer queda
-  en `null`. Se guarda **siempre** `formato_version` por análisis y las métricas se
-  filtran por esa columna para **no mezclar series** (hay una fecha de corte experimental).
+  en `null`. Se guarda **siempre** `formato_version` por análisis, pero es **sólo un
+  registro informativo** del formato que tenía el HTML al generarse: no separa ni filtra
+  las métricas. Las métricas combinan v1 + v2 (los `null` ya se excluyen porque sólo
+  computan recomendaciones con `estado_dato='ok'`).
 
 > El parser se calibra con HTML reales. Pegá un ejemplo v2 y, si tenés, uno v1 viejo.
 
@@ -91,6 +99,35 @@ cuota, se pasa un token (ver *Deploy*).
 Fuente de precios gratuita y **sin API key**, ideal para un experimento académico.
 Está detrás de una interfaz `PriceProvider`, así que se puede cambiar por otra fuente
 sin tocar el resto del sistema. Benchmark: S&P 500 (`^GSPC`, con fallback a `SPY`).
+
+## Dashboard (Etapa 3)
+
+UI estética "Liquid Glass" (dark glassmorphism, acentos verde/rojo por veredicto),
+construida sobre el mockup `design/dashboard-v2.html`. Se corre local con:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Tiene **dos páginas** (navegación arriba, `st.navigation`):
+
+- **Panel** — masthead, filtros (horizonte diario/semanal/mensual + nivel de riesgo) y
+  botón *Actualizar*; **4 KPI cards** (hit rate vs S&P 500, alpha acumulado, recos
+  evaluadas, mejor recomendación); **Fig. 1** curva de retorno acumulado (IA vs S&P 500),
+  **Fig. 2** vela comparativa normalizada a base 100, **Fig. 3** calibración (confianza
+  declarada vs aciertos reales); y la tabla de recomendaciones con badges por riesgo y
+  veredicto.
+- **Metodología** — documentación dentro del propio dashboard: qué mide el experimento,
+  la *Routine* generadora, la arquitectura, la fórmula del veredicto, la normalización
+  del candlestick, el registro de formato v1/v2 y el deploy.
+
+**Cómo se construyó (build híbrido):** Streamlit no hace `backdrop-filter` + aurora
+animada de forma nativa, así que el masthead, las KPI cards y la tabla se renderizan
+como HTML inyectado con los estilos exactos del mockup (clase `.glass`), mientras que
+las 3 figuras usan **Plotly** tematizado (fondo transparente, paleta del tema) para
+seguir siendo interactivas, y los filtros + refresh son widgets de Streamlit. Un CSS
+global fija la aurora de fondo y oculta el chrome default de Streamlit. Los tokens de
+color y el CSS viven en `grupo3/dashboard/theme.py` (una sola fuente de verdad).
 
 ## Veredicto (relativo al S&P 500)
 
@@ -181,5 +218,5 @@ toca internet.
 - [x] Etapa 1 — ingesta GitHub → parser v1/v2 → SQLite (idempotente)
 - [x] Etapa 2 — precios yfinance + benchmark S&P 500 + alpha/veredicto + métricas
 - [x] Etapa 2b — candlestick comparativo normalizado (base 100)
-- [ ] Etapa 3 — dashboard fintech dark (sobre el mockup aprobado)
-- [ ] Etapa 4 — automatización refresh + deploy
+- [x] Etapa 3 — dashboard "Liquid Glass" (Panel + Metodología) sobre el mockup v2
+- [ ] Etapa 4 — automatización refresh + deploy en Streamlit Cloud

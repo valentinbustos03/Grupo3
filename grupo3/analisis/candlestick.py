@@ -68,7 +68,7 @@ def build_candlestick(
     fig.add_hline(y=100, line_dash="dot", line_color="rgba(255,255,255,.35)",
                   annotation_text="base 100", annotation_position="top left")
 
-    fig.update_xaxes(rangeslider_visible=False)
+    fig.update_xaxes(rangeslider_visible=False, showticklabels=False)
     fig.update_layout(
         template="plotly_dark",
         yaxis_title="Base 100 (apertura del período)",

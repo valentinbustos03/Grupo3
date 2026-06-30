@@ -18,8 +18,13 @@ def render() -> None:
     )
     inject_css()
 
+    # url_path explícito: ambas funciones se llaman ``render``, y Streamlit infiere
+    # el pathname del nombre del callable -> sin esto colisionan ("URL pathnames
+    # must be unique").
     nav = st.navigation([
-        st.Page(panel.render, title="Panel", icon="📊", default=True),
-        st.Page(metodologia.render, title="Metodología", icon="📖"),
+        st.Page(panel.render, title="Panel", icon="📊",
+                url_path="panel", default=True),
+        st.Page(metodologia.render, title="Metodología", icon="📖",
+                url_path="metodologia"),
     ])
     nav.run()
